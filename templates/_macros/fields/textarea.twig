@@ -1,0 +1,36 @@
+{# Textarea Options Available #}
+
+{#
+	id: "myfieldId",
+	name: "myfieldName",
+	inputClass: "myfieldClass",
+	rows: "8",
+	columns: "50",
+	disabled: true/false,
+	value: "myfieldValue",
+	placeholder: "Field Placeholder",
+	dataAttributes: [
+	    ' autocomplete="off"'
+	]
+ #}
+
+{% set rows = (rows is defined ? rows : 2) %}
+{% set cols = (cols is defined ? cols : 50) %}
+
+{% set classes = [
+	'js-textarea',
+	(inputClass ?? null),
+]|filter|join(' ') %}
+
+{% set attributes = [
+    ((id ?? false) ? 'id="'~id~'"' : null),
+    ((name ?? false) ? 'name="'~name~'"' : null),
+    ((placeholder ?? false) ? 'placeholder="'~placeholder~'"' : null),
+	(disabled ? 'disabled' : null)
+]|merge(dataAttributes ?? [])|merge(attributes ?? [])|filter|join(' ') %}
+
+<div class="field-input">
+	<textarea class="{{ classes }}" rows="{{ rows }}" cols="{{ cols }}" {{ attributes|raw }}>
+		{{ value is defined ? value : null }}
+	</textarea>
+</div>

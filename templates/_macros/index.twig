@@ -1,0 +1,37 @@
+{#
+	Macros Index
+ #}
+
+{# Elements #}
+{% macro icon(icon) %}
+	{% include "_macros/elements/icon" with { icon: icon } only %}
+{% endmacro %}
+
+{# Fields #}
+{% macro field(config, input, fieldType) %}
+	{% include "_macros/fields/field" with (config ?? {})|merge({ input: input, fieldType: fieldType, macros: _self }) only %}
+{% endmacro %}
+
+{% macro text(config) %}
+	{% include "_macros/fields/text" with config|merge({ macros: _self }) only %}
+{% endmacro %}
+
+{% macro textField(config) %}
+	{{ _self.field((config ?? {})|merge({ type: 'text' }), _self.text(config)) }}
+{% endmacro %}
+
+{% macro textarea(config) %}
+	{% include "_macros/fields/textarea" with config|merge({ macros: _self }) only %}
+{% endmacro %}
+
+{% macro textareaField(config) %}
+	{{ _self.field((config ?? {})|merge({ type: 'textarea' }), _self.textarea(config)) }}
+{% endmacro %}
+
+{% macro select(config) %}
+	{% include "_macros/fields/select" with config|merge({ macros: _self }) only %}
+{% endmacro %}
+
+{% macro selectField(config) %}
+	{{ _self.field((config ?? {})|merge({ type: 'select' }), _self.select(config)) }}
+{% endmacro %}

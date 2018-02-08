@@ -1,0 +1,74 @@
+{% set baseUrl = alias('@baseUrl') ~ '/' %}
+{% set devMode = craft.app.config.general.devMode %}
+{% set analytics = 'GA_TRACKING_ID' %}
+{% set lang = craft.app.language |slice(0,2) %}
+
+{% set title = title ?? globalSeo.title ?? false %}
+{% set description = description ?? globalSeo.seoDescription ?? false %}
+{% set seoImage = seoImage ?? globalSeo.seoImage.one().url ?? false %}
+{% set seoTwitterHandle = globalSeo.seoTwitterHandle ?? false %}
+
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+    <head>
+        {# -- Meta header tags -- #}
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, minimum-scale=1">
+
+        {# -- Basic Meta -- #}
+        <title>{{ title ? title ~ ' - ' }}{{ siteName }}</title>
+        <meta name="description" content="{{ description }}">
+
+        {# -- Favicons -- #}
+        {% include '_includes/blocks/favicons' %}
+
+        {# -- Open Graph Meta -- #}
+        <meta property="og:locale" content="{{ lang }}" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="{{ title }}" />
+        <meta property="og:description" content="{{ description }}" />
+        <meta property="og:url" content="{{ craft.app.request.url }}" />
+        <meta property="og:site_name" content="{{ siteName }}" />
+        <meta property="og:image" content="{{ seoImage }}" />
+
+        {# -- Twitter Cards Meta -- #}
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:title" content="{{ title }}"/>
+        <meta name="twitter:description" content="{{ description }}"/>
+        <meta name="twitter:site" content="{{ seoTwitterHandle }}"/>
+        <meta name="twitter:image" content="{{ seoImage }}"/>
+        <meta name="twitter:creator" content="{{ seoTwitterHandle }}"/>
+
+        {# -- Links -- #}
+        <link rel="dns-prefetch" href="{{ baseUrl }}">
+        <link rel="preconnect" href="{{ baseUrl }}" crossorigin>
+        <link rel="stylesheet" href="{{ baseUrl }}build/css/app{{ devMode ? '' : '.min'}}.css">
+
+        {# -- Analytics -- #}
+        {% if not devMode %}
+            <!-- Global Site Tag (gtag.js) - Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id={{ analytics | raw }}"></script>
+            <script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', '{{ analytics | raw }}');
+            </script>
+        {% endif %}
+
+    </head>
+
+    {# -- HTML Body -- #}
+    <body>
+        <div hidden>
+            {% include 'build/icons/svg/svg-symbols.svg' %}
+        </div>
+        <main>
+            {# -- Content block -- #}
+            {% block content %}{% endblock %}
+        </main>
+        <script type="text/javascript" src="{{ baseUrl }}build/js/app{{ devMode ? '' : '.min'}}.js"></script>
+    </body>
+</html>

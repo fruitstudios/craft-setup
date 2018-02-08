@@ -1,0 +1,57 @@
+{# Select Options Available #}
+
+{# Setting options example...#}
+
+{#
+	id: "myfieldId",
+	name: "myfieldName",
+	inputClass: "myfieldClass",
+	disabled: true/false,
+	placeholder: "Field Placeholder",
+	optgroups: optgroups,
+	options: options
+ #}
+
+{% set classes = [
+	(inputClass ?? null),
+]|filter|join(' ') %}
+
+{% set options = options is defined ? options : [] %}
+{% set optgroups = optgroups ?? null %}
+{% set value = value ?? null %}
+{% set hasOptgroups = false %}
+
+<div class="field-input">
+	<select class="{{ classes }}"
+		{% if id is defined %} id="{{ id }}"{% endif %}
+		{% if name is defined %} name="{{ name }}"{% endif %}
+		{% if placeholder is defined %} placeholder="{{ placeholder }}"{% endif %}
+		{% if disabled is defined and disabled %} disabled{% endif %}>
+		{% if optgroups %}
+			{% for key, optgroup in optgroups %}
+				{% if optgroup.options is defined %}
+				    <optgroup label="{{ optgroup.name }}">
+				    {% for key, option in optgroup.options %}
+						{% set optionLabel = (option.label is defined ? option.label : option) %}
+						{% set optionValue = (option.value is defined ? option.value : key) %}
+						{% set optionDisabled = (option.disabled is defined ? option.disabled : false) %}
+						<option value="{{ optionValue }}"{% if optionValue == value %} selected{% endif %}{% if optionDisabled %} disabled{% endif %}>{{ optionLabel }}</option>
+					{% endfor %}
+					</optgroup>
+				{% else %}
+					{% set optionLabel = (option.label is defined ? option.label : optgroup) %}
+					{% set optionValue = (option.value is defined ? option.value : key) %}
+					{% set optionDisabled = (option.disabled is defined ? option.disabled : false) %}
+					<option value="{{ optionValue }}"{% if optionValue == value %} selected{% endif %}{% if optionDisabled %} disabled{% endif %}>{{ optionLabel }}</option>
+				{% endif %}
+			{% endfor %}
+		{% else %}
+		    {% for key, option in options %}
+				{% set optionLabel = (option.label is defined ? option.label : option) %}
+				{% set optionValue = (option.value is defined ? option.value : key) %}
+				{% set optionDisabled = (option.disabled is defined ? option.disabled : false) %}
+				<option value="{{ optionValue }}"{% if optionValue == value %} selected{% endif %}{% if optionDisabled %} disabled{% endif %}>{{ optionLabel }}</option>
+			{% endfor %}
+		{% endif %}
+	</select>
+</div>

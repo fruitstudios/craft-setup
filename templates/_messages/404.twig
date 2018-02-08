@@ -1,0 +1,10 @@
+{% extends "_layouts/_base.twig" %}
+
+{# Set Meta #}
+{% set title = '(404) Page not found' %}
+{% set description = 'The requested URL was not found on this server.' %}
+
+{% block content %}
+	<h1>{{ title }}</h1>
+	<p>{{ description }}</p>
+{% endblock %}

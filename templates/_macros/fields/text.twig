@@ -1,0 +1,34 @@
+{# Text Input Options Available #}
+
+{#
+    id: "myfieldId",
+    name: "myfieldName",
+    inputClass: "myInputClass",
+    type: "email"/"password"/"text",
+    value: "myfieldValue",
+    disabled: true/false,
+    placeholder: "Field Placeholder",
+    dataAttributes: [
+        ' autocomplete="off"'
+    ]
+ #}
+
+{% set id = id ?? ('input-'~random()) %}
+{% set name = name ?? '' %}
+{% set type = type ?? 'text' %}
+{% set value = value ?? '' %}
+{% set disabled = disabled ?? false %}
+
+{% set classes = [
+    (inputClass ?? null),
+	'js-'~type~'Input'
+]|filter|join(' ') %}
+
+{% set attributes = [
+    ((placeholder ?? false) ? 'placeholder="'~placeholder~'"' : null),
+	(disabled ? 'disabled' : null)
+]|merge(dataAttributes ?? [])|merge(attributes ?? [])|filter|join(' ') %}
+
+<div class="field-input js-fieldInput">
+    <input id="{{ id }}" class="{{ classes }}" type="{{ type }}" name="{{ name }}" value="{{ value }}"{{ attributes|raw }}>
+</div>

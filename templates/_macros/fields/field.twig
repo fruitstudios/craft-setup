@@ -1,0 +1,51 @@
+{# Field Options Available #}
+{# In addition to the input options that are passed through the following can be set for the field. #}
+
+{#
+	label: "myfieldLabel",
+	instructions: "Some help text",
+	fieldClass: "myfieldClass",
+	required: true/false
+ #}
+
+{% set input = input ?? null %}
+{% set name = name ?? '' %}
+{% set label = label ?? false %}
+{% set instructions = instructions ?? null %}
+{% set error = error ?? '' %}
+{% set required = required ?? false %}
+
+{% set fieldClass = fieldClass ?? false %}
+
+{% set fieldClasses = [
+	'field',
+	'js-field',
+	(fieldClass ? fieldClass : null),
+	(error ? 'is-negative' : null)
+]|filter|join(' ') %}
+
+{% set labelClasses = [
+	'field-label',
+	'js-fieldLabel',
+	(required ? 'is-required' : null),
+]|filter|join(' ') %}
+
+<div class="{{ fieldClasses }}">
+
+	{% if label %}
+		<label class="{{ labelClasses }}"{% if name %} for="{{ name }}"{% endif %}>
+			{{ label|raw }}
+		</label>
+	{% endif %}
+
+	{% if input %}
+		{{ input|raw }}
+	{% endif %}
+
+	{% if instructions %}
+		<p class="field-instruction js-fieldInstruction">{{ instructions|raw }}</p>
+	{% endif %}
+
+	<span class="field-errorMessage js-fieldErrorMessage">{{ error|raw }}</span>
+
+</div>
