@@ -3,10 +3,10 @@
 {% set analytics = 'GA_TRACKING_ID' %}
 {% set lang = craft.app.language |slice(0,2) %}
 
-{% set title = title ?? globalSeo.title ?? false %}
-{% set description = description ?? globalSeo.seoDescription ?? false %}
-{% set seoImage = seoImage ?? globalSeo.seoImage.one().url ?? false %}
-{% set seoTwitterHandle = globalSeo.seoTwitterHandle ?? false %}
+{% set title = title ?? globalSeo.globalSeoTitle ?? false %}
+{% set description = description ?? globalSeo.globalSeoDescription ?? false %}
+{% set seoImage = seoImage ?? globalSeo.globalSeoImage.one().url ?? false %}
+{% set seoTwitterHandle = globalContactInformation.globalTwitterUsername ?? false %}
 
 <!DOCTYPE html>
 <html lang="{{ lang }}">
@@ -36,9 +36,11 @@
         <meta name="twitter:card" content="summary_large_image"/>
         <meta name="twitter:title" content="{{ title }}"/>
         <meta name="twitter:description" content="{{ description }}"/>
-        <meta name="twitter:site" content="{{ seoTwitterHandle }}"/>
         <meta name="twitter:image" content="{{ seoImage }}"/>
-        <meta name="twitter:creator" content="{{ seoTwitterHandle }}"/>
+        {% if seoTwitterHandle %}
+            <meta name="twitter:site" content="{{ seoTwitterHandle }}"/>
+            <meta name="twitter:creator" content="{{ seoTwitterHandle }}"/>
+        {% endif %}
 
         {# -- Links -- #}
         <link rel="dns-prefetch" href="{{ baseUrl }}">
