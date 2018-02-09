@@ -111,7 +111,7 @@ gulp.task('default', ['js', 'scss', 'svg', 'images', 'fonts'], function() {
     gulp.watch(['src/images/**/*'], ['images']);
     gulp.watch(['src/fonts/**/*'], ['fonts']);
     gulp.watch(['src/js/**/*.js'], ['js']);
-    gulp.watch(['templates/**/*.html'], function() {
+    gulp.watch(['templates/**/*.twig'], function() {
         browserSync.reload();
     });
 });
