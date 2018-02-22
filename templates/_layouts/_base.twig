@@ -2,14 +2,17 @@
 {% set devMode = craft.app.config.general.devMode %}
 {% set analytics = 'GA_TRACKING_ID' %}
 {% set lang = craft.app.language |slice(0,2) %}
+{% set staticAssetsVersion = craft.app.config.general.custom.staticAssetsVersion %}
 
 {% set title = title ?? globalSeo.globalSeoTitle ?? false %}
 {% set description = description ?? globalSeo.globalSeoDescription ?? false %}
-{% set seoImage = seoImage ?? globalSeo.globalSeoImage.one().url ?? false %}
+{% set seoImage = seoImage ?? globalSeo.globalSeoImage.one().getUrl('size460x320') ?? false %}
 {% set seoTwitterHandle = globalContactInformation.globalTwitterUsername ?? false %}
 
+{% import "_macros" as macros %}
+
 <!DOCTYPE html>
-<html lang="{{ lang }}">
+<html class="h-full" lang="{{ lang }}">
     <head>
         {# -- Meta header tags -- #}
         <meta charset="utf-8">
@@ -45,7 +48,7 @@
         {# -- Links -- #}
         <link rel="dns-prefetch" href="{{ baseUrl }}">
         <link rel="preconnect" href="{{ baseUrl }}" crossorigin>
-        <link rel="stylesheet" href="{{ baseUrl }}build/css/app{{ devMode ? '' : '.min'}}.css">
+        <link rel="stylesheet" href="{{ baseUrl }}build/css/app{{ devMode ? '' : '.min.' ~ staticAssetsVersion }}.css">
 
         {# -- Analytics -- #}
         {% if not devMode %}
@@ -62,15 +65,20 @@
 
     </head>
 
-    {# -- HTML Body -- #}
-    <body>
-        <div hidden>
-            {% include 'build/icons/svg/svg-symbols.svg' %}
+    {# -- HTML Body with a sticky footer -- #}
+    <body class="flex flex-col h-full">
+
+        {# -- Include the header -- #}
+        {% include '_includes/blocks/header' %}
+
+        {# -- Main body content -- #}
+        <div class="flex-1">
+          {% block body %}{% endblock %}
         </div>
-        <main>
-            {# -- Content block -- #}
-            {% block content %}{% endblock %}
-        </main>
-        <script type="text/javascript" src="{{ baseUrl }}build/js/app{{ devMode ? '' : '.min'}}.js"></script>
+
+        {# -- Footer -- #}
+        {% include '_includes/blocks/footer' %}
+
+        <script type="text/javascript" src="{{ baseUrl }}build/js/app{{ devMode ? '' : '.min.' ~ staticAssetsVersion }}.js"></script>
     </body>
 </html>

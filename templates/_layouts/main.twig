@@ -1,0 +1,24 @@
+{#
+    Layout for standard pages
+    -------------------------
+
+#}
+
+{% extends "_layouts/_base.twig" %}
+
+{% block body %}
+
+	{# Main wrapper for the page #}
+	<main class="container mx-auto">
+
+		{# Page header and title #}
+		<h1>{{ title }}</h1>
+		<p>{{ description }}</p>
+
+		{# The page content #}
+		{% block content %}{% endblock %}
+
+	</main>
+
+{% endblock %}
+

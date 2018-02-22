@@ -3,35 +3,58 @@
  #}
 
 {# Elements #}
-{% macro icon(icon) %}
-	{% include "_macros/elements/icon" with { icon: icon } only %}
+{% macro icon(config) %}
+	{% include "_macros/elements/icon" with (config ?? {}) only %}
+{% endmacro %}
+
+{% macro alert(config) %}
+	{% include "_macros/elements/alert" with (config ?? {}) only %}
 {% endmacro %}
 
 {# Fields #}
-{% macro field(config, input, fieldType) %}
-	{% include "_macros/fields/field" with (config ?? {})|merge({ input: input, fieldType: fieldType, macros: _self }) only %}
+{% macro field(config, input) %}
+	{% include "_macros/fields/field" with (config ?? {})|merge({ input: input }) only %}
 {% endmacro %}
 
 {% macro text(config) %}
-	{% include "_macros/fields/text" with config|merge({ macros: _self }) only %}
+	{% include "_macros/fields/text" with config only %}
 {% endmacro %}
 
 {% macro textField(config) %}
-	{{ _self.field((config ?? {})|merge({ type: 'text' }), _self.text(config)) }}
+	{% import "_macros" as macros %}
+	{{ macros.field((config ?? {})|merge({ type: 'text' }), macros.text(config)) }}
 {% endmacro %}
 
 {% macro textarea(config) %}
-	{% include "_macros/fields/textarea" with config|merge({ macros: _self }) only %}
+	{% include "_macros/fields/textarea" with config only %}
 {% endmacro %}
 
 {% macro textareaField(config) %}
-	{{ _self.field((config ?? {})|merge({ type: 'textarea' }), _self.textarea(config)) }}
+	{% import "_macros" as macros %}
+	{{ macros.field((config ?? {})|merge({ type: 'textarea' }), macros.textarea(config)) }}
 {% endmacro %}
 
 {% macro select(config) %}
-	{% include "_macros/fields/select" with config|merge({ macros: _self }) only %}
+	{% include "_macros/fields/select" with config only %}
 {% endmacro %}
 
 {% macro selectField(config) %}
-	{{ _self.field((config ?? {})|merge({ type: 'select' }), _self.select(config)) }}
+	{% import "_macros" as macros %}
+	{{ macros.field((config ?? {})|merge({ type: 'select' }), macros.select(config)) }}
 {% endmacro %}
+
+{% macro submit(config) %}
+	{% include "_macros/fields/submit" with config only %}
+{% endmacro %}
+
+{# Forms #}
+
+{% macro form(config) %}
+	{% include "_macros/forms/form" with config only %}
+{% endmacro %}
+
+{% macro exampleForm(config) %}
+	{% include "_macros/forms/exampleForm" with config only %}
+{% endmacro %}
+
+

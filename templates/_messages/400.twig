@@ -1,10 +1,8 @@
-{% extends "_layouts/base.twig" %}
+{% extends "_layouts/auth.twig" %}
 
 {# Set Meta #}
 {% set title = '(400) Bad Request' %}
 {% set description = 'The request could not be understood by the server due to malformed syntax.' %}
 
 {% block content %}
-	<h1>{{ title }}</h1>
-	<p>{{ description }}</p>
 {% endblock %}

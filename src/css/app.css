@@ -1,0 +1,18 @@
+/**
+ * This injects Tailwind's base styles, which is a combination of
+ * Normalize.css and some additional base styles.
+ */
+@tailwind preflight;
+
+/* -- Basics */
+:root {
+
+}
+
+html {
+    @apply .text-black .font-sans .leading-normal .antialiased;
+    box-sizing: border-box;
+}
+
+@tailwind utilities;
+

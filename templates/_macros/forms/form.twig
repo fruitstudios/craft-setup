@@ -1,0 +1,43 @@
+{% set id = id ?? false %}
+{% set action = action ?? false %}
+{% set fields = fields ?? false %}
+{% set method = method ?? 'post' %}
+
+
+{# Addition settings to be added #}
+
+{# {% set class = class ?? false %}
+{% set name = name ?? '' %}
+{% set formClass = [
+    (name ? name~'-form' : false ),
+    (class ? class : null),
+]|filter|join(' ') %}
+{% set actionUrl = actionUrl ?? false %}
+
+{% set redirect = redirect ?? false %}
+{% set csrf = csrf ?? craft.config.enableCsrfProtection %}
+{% set method = method ?? 'post' %}
+
+{% set hiddenInputs = hiddenInputs ?? false %}
+{% set hideSubmit = hideSubmit ?? false %}
+{% set submitText = submitText ?? 'Submit' %}
+{% set submitClass = submitClass ?? '' %}
+{% set successBlock = successBlock ?? false %}
+{% set formHeader = formHeader ?? false %}
+{% set formFooter = formFooter ?? false %} #}
+
+<form{{ id ? (' id="'~id~'"')|raw }} method="{{ method }}" accept-charset="UTF-8">
+
+	{{ csrfInput() }}
+
+	{% if action %}
+    	<input type="hidden" name="action" value="{{ action }}">
+	{% endif %}
+
+	{% if fields %}
+		{{ fields }}
+	{% endif %}
+
+	<input class="btn bg-primary text-white" type="submit" value="Save changes">
+
+</form>

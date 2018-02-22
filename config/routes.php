@@ -19,9 +19,13 @@
  */
 
 return [
+
 	// Auth Routes
 	'login' => ['template' => '_views/auth/login'],
 	'register' => ['template' => '_views/auth/register'],
 	'forgotpassword' => ['template' => '_views/auth/forgotPassword'],
 	'setpassword' => ['template' => '_views/auth/setPassword'],
+
+
+	'offline' => ['template' => '_messages/offline'],
 ];

@@ -1,0 +1,25 @@
+{# Submit Options Available #}
+
+{#
+    id: "myfieldId",
+    name: "myfieldName",
+    inputClass: "myInputClass",
+    type: "email"/"password"/"text",
+    value: "myfieldValue",
+    disabled: true/false,
+    placeholder: "Field Placeholder",
+    dataAttributes: [
+        ' autocomplete="off"'
+    ]
+ #}
+
+{% set submit = submit ?? 'submit' %}
+{% set classes = [
+    'p-4',
+    (submitClass ?? null),
+    'js-submit'
+]|filter|join(' ') %}
+
+<div>
+    <input type='submit' class="{{ classes }}" value="{{ submit }}" />
+</div>

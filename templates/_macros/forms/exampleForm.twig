@@ -1,0 +1,46 @@
+{#
+	An example for for editing a user profile
+	-----------------------------------------
+
+#}
+
+{% import "_macros" as macros %}
+
+{% if currentUser %}
+
+	{# Show an alert if changes are made successfully #}
+	{% if craft.app.request.getParam('m') %}
+		{{ macros.alert({
+			alertTitle: 'Your changes have been saved',
+			alertSummary: 'Your contact details have been updated successfully'
+		})}}
+	{% endif %}
+
+	{# Set the fields that will show #}
+	{% set fields %}
+
+		<input type="hidden" name="userId" value="{{ currentUser.id }}">
+		{{ redirectInput('{{ craft.app.request.pathInfo }}?m=saved') }}
+
+		{{ macros.textField({
+			name: 'firstName',
+			value: currentUser.firstName,
+			label: 'First Name'
+		}) }}
+
+		{{ macros.textField({
+			name: 'lastName',
+			value: currentUser.lastName,
+			label: 'Surname'
+		}) }}
+
+	{% endset %}
+
+	{# Pass these fields to the form wrapper #}
+	{{ macros.form({
+		id: 'profileForm',
+		action: 'users/save-user',
+		fields: fields
+	}) }}
+
+{% endif %}

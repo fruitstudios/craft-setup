@@ -1,13 +1,20 @@
 /*------------------------------------*\
     GULP SETUP
 \*------------------------------------*/
-var gulp = require('gulp');
-
 const pkg = require('./package.json');
+
+const gulp = require("gulp");
+
 const $ = require('gulp-load-plugins')({
     pattern: ['*'],
     scope: ['devDependencies']
 });
+
+// error logging
+const onError = (err) => {
+    console.log(err);
+};
+
 browserSync = require('browser-sync').create()
 
 
@@ -21,19 +28,59 @@ var sassOptions = {
     }
 };
 
-gulp.task("scss", function() {
+gulp.task("css", () => {
+    $.fancyLog("-> Compiling css");
+    return gulp.src(pkg.paths.tailwind.src)
+        .pipe($.plumber({ errorHandler: onError }))
+        .pipe($.postcss([
+            $.tailwindcss(pkg.paths.tailwind.config),
+            require("autoprefixer")
+        ]))
+        .pipe($.purgecss({
+            extractors: [{
+                extractor: TailwindExtractor,
+                extensions: ["html", "twig", "css", "js"]
+            }],
+            content: [pkg.paths.build.templates]
+        }))
+        .pipe($.size({ gzip: true, showFiles: true }))
+        .pipe(gulp.dest(pkg.paths.build.css));
+});
 
-    gulp.src(pkg.paths.src.styles)
-        .pipe($.plumber())
-        .pipe($.sass())
-        .pipe($.autoprefixer(sassOptions.autoprefixer))
-        .pipe(gulp.dest(pkg.paths.build.styles))
+// Build the css for production (Purge & Minify)
+gulp.task("buildcss", () => {
+    $.fancyLog("-> Compiling css");
+    return gulp.src(pkg.paths.tailwind.src)
+        .pipe($.plumber({ errorHandler: onError }))
+        .pipe($.postcss([
+            $.tailwindcss(pkg.paths.tailwind.config),
+            require("autoprefixer")
+        ]))
+        .pipe($.purgecss({
+            extractors: [{
+                extractor: TailwindExtractor,
+                extensions: ["html", "twig", "css", "js"]
+            }],
+            content: [pkg.paths.build.templates]
+        }))
+        .pipe(gulp.dest(pkg.paths.build.css))
         .pipe($.cssnano())
         .pipe($.rename({
             suffix: '.min'
         }))
-        .pipe(gulp.dest(pkg.paths.build.styles));
+        .pipe($.size({ gzip: true, showFiles: true }))
+        .pipe(gulp.dest(pkg.paths.build.css));
 });
+
+// Custom PurgeCSS extractor for Tailwind that allows special characters in
+// class names.
+//
+// https://github.com/FullHuman/purgecss#extractor
+class TailwindExtractor {
+    static extract(content) {
+        return content.match(/[A-z0-9-:\/]+/g);
+    }
+}
 
 /*------------------------------------*\
     JS TASKS
@@ -97,16 +144,29 @@ gulp.task('fonts', function() {
 
 });
 
+/*---------------------------------------------------------------*\
+    STATIC ASSETS - FIND THE NO IN THE CONFIG AND INCREMENT BY 1
+\*---------------------------------------------------------------*/
+gulp.task("static-assets-version", () => {
+    gulp.src(pkg.paths.craftConfig + "general.php")
+        .pipe($.replace(/'staticAssetsVersion' => (\d+),/g, function(match, p1, offset, string) {
+            p1++;
+            $.fancyLog("-> Changed staticAssetsVersion to " + p1);
+            return "'staticAssetsVersion' => " + p1 + ",";
+        }))
+        .pipe(gulp.dest(pkg.paths.craftConfig));
+});
+
 /*------------------------------------*\
     DEFAULT
 \*------------------------------------*/
-gulp.task('default', ['js', 'scss', 'svg', 'images', 'fonts'], function() {
+gulp.task('default', ['js', 'css', 'svg', 'images', 'fonts'], function() {
     browserSync.init(['web/build/css/*.css', 'web/build/js/*.js'], {
         proxy: pkg.urls.local,
         https: true
     });
 
-    gulp.watch(['src/**/*.scss'], ['scss']);
+    gulp.watch(['src/css/**/*.css', './tailwind.js'], ['css']);
     gulp.watch(['src/icons/**/*.svg'], ['svg']);
     gulp.watch(['src/images/**/*'], ['images']);
     gulp.watch(['src/fonts/**/*'], ['fonts']);
@@ -115,3 +175,8 @@ gulp.task('default', ['js', 'scss', 'svg', 'images', 'fonts'], function() {
         browserSync.reload();
     });
 });
+
+/*------------------------------------*\
+    BUILD TASK
+\*------------------------------------*/
+gulp.task("build", ["buildcss", "static-assets-version"]);
