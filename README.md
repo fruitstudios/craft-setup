@@ -35,6 +35,7 @@ Basic project structure for a Craft 3 set up. Includes some base macros, scss/js
 * Install [Linkit](https://github.com/fruitstudios/craft-linkit) `composer require fruitstudios/linkit`
 * Install [Field Manager Plugin](https://github.com/verbb/field-manager) `composer require verbb/field-manager`
 * Import fields from `fields_to_import.json` file
+* Set up global sets globalSettings, globalSeo
 
 
 ### Acknowledgments
