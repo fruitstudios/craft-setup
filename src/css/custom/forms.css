@@ -146,7 +146,7 @@ form.has-errors .form-errors {
 	font-size: 14px;
 }
 .choices__list--multiple .choices__item.is-highlighted {
-	@apply .bg-black-dark .rounded .border-black-dark;
+	@apply .bg-black .rounded .border-black;
 }
 .choices[data-type*="select-multiple"] .choices__button {
 	margin-right: 2px;
