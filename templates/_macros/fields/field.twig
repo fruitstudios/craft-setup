@@ -1,56 +1,46 @@
-{# Field Options Available #}
-{# In addition to the input options that are passed through the following can be set for the field. #}
-
-{#
-	label: "myfieldLabel",
-	instructions: "Some help text",
-	fieldClass: "myfieldClass",
-	required: true/false
- #}
+{# Field Wrapper for input #}
 
 {% set input = input ?? null %}
 {% set name = name ?? '' %}
 {% set label = label ?? false %}
+{% set labelClass = labelClass ?? false %}
 {% set type = type ?? 'false' %}
 {% set instructions = instructions ?? null %}
 {% set error = error ?? '' %}
 {% set required = required ?? false %}
 {% set forgotPassword = forgotPassword ?? false %}
+{% set fieldMargin = fieldMargin ?? false %}
 
 {% set fieldClass = fieldClass ?? false %}
 
 {% set fieldClasses = [
-	'text-left mb-4',
-	'js-field',
+	'text-left relative form-field',
+	(fieldMargin ? fieldMargin : 'mb-6'),
 	(fieldClass ? fieldClass : null),
 	(error ? 'is-negative' : null)
 ]|filter|join(' ') %}
 
 {% set labelClasses = [
-	'block',
-	'js-fieldLabel',
+	'font-bold antialiased mb-1',
+	(type and type == 'dateTime' ? 'md:inline-block' : 'inline-block'),
 	(required ? 'is-required' : null),
+	(labelClass ?? labelClass ?? null),
 ]|filter|join(' ') %}
 
-<div class="{{ fieldClasses }}">
+<div class="{{ fieldClasses }}" data-form-field="{{ name }}">
 
 	{% if label %}
 		<label class="{{ labelClasses }}"{% if name %} for="{{ name }}"{% endif %}>
 			{{ label|raw }}
-			{% if forgotPassword %}
-				<a class="text-primary" href="{{ url('forgotpassword') }}">Forgot password?</a>
-			{% endif %}
 		</label>
+	{% endif %}
+
+	{% if instructions %}
+		<p class="text-sm mb-2">{{ instructions|raw }}</p>
 	{% endif %}
 
 	{% if input %}
 		{{ input|raw }}
 	{% endif %}
-
-	{% if instructions %}
-		<p class="js-fieldInstruction">{{ instructions|raw }}</p>
-	{% endif %}
-
-	<span class="js-fieldErrorMessage">{{ error|raw }}</span>
 
 </div>

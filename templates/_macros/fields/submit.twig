@@ -1,25 +1,37 @@
-{# Submit Options Available #}
+{# Submit Button #}
 
-{#
-    id: "myfieldId",
-    name: "myfieldName",
-    inputClass: "myInputClass",
-    type: "email"/"password"/"text",
-    value: "myfieldValue",
-    disabled: true/false,
-    placeholder: "Field Placeholder",
-    dataAttributes: [
-        ' autocomplete="off"'
-    ]
- #}
+{% set submitText = submitText ?? 'submit' %}
+{% set fullWidth = fullWidth ?? false %}
+{% set wrapperClass = wrapperClass ?? false %}
+{% set cancel = cancel ?? false %}
+{% set reset = reset ?? false %}
 
-{% set submit = submit ?? 'submit' %}
-{% set classes = [
-    'p-4',
-    (submitClass ?? null),
-    'js-submit'
+{% set wrapperClasses = [
+    'form-submit',
+    (wrapperClass ? wrapperClass : 'mb-6'),
+    (fullWidth ? 'block w-full' : 'inline-block'),
 ]|filter|join(' ') %}
 
-<div>
-    <input type='submit' class="{{ classes }}" value="{{ submit }}" />
+{% set classes = [
+    'btn btn-primary cursor-pointer',
+    (fullWidth ? 'block w-full' : null),
+    (submitClass ?? null),
+]|filter|join(' ') %}
+
+{% if cancel %}
+    <div class="border-t pt-4"></div>
+{% endif %}
+<div class="flex items-center">
+    <div class="{{ wrapperClasses }}" data-form-submit>
+        <input type='submit' class="{{ classes }}" value="{{ submitText|raw }}">
+    </div>
+    {% if cancel %}
+        <a class="ml-4 no-underline" href="" data-toggle-classes="hidden" data-toggle-target="{{ cancel }}">Cancel</a>
+    {% endif %}
+    {% if reset %}
+        <a class="ml-4 no-underline" href="" data-form-reset data-modal-ignore>{{ reset is same as(true) ? 'Reset' : reset }}</a>
+    {% endif %}
 </div>
+
+
+

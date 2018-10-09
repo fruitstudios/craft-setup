@@ -1,0 +1,21 @@
+{% set baseUrl = alias('@baseUrl') ~ '/' %}
+
+{# Set Meta #}
+{% set title = 'Offline' %}
+{% set description = 'The site is currently offline.' %}
+
+<!DOCTYPE html>
+<html class="relative h-full w-full flex flex-col">
+<head>
+	<title>Offline</title>
+	<link rel="stylesheet" href="{{ baseUrl }}build/css/app.css">
+</head>
+<body class="h-full w-full flex items-center justify-center">
+	<main class="flex-grow flex justify-center">
+		<div class="flex flex-col justify-center text-center px-4">
+			<h1 class="text-5xl">OFFLINE</h1>
+			<p class="text-base mb-16">The site is currently offline. Back soon.</p>
+		</div>
+	</main>
+</body>
+</html>

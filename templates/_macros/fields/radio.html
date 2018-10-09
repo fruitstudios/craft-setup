@@ -1,0 +1,26 @@
+{# Radio Input #}
+
+{% set id = 'radio-'~random() %}
+{% set name = name ?? ('radio-'~random()) %}
+{% set checked = checked ?? false ? ' checked' : '' %}
+{% set label = label ?? '' %}
+{% set labelClass = labelClass ?? false %}
+{% set radioClass = radioClass ?? false %}
+{% set value = value ?? '' %}
+{% set disabled = disabled ?? false %}
+{% set required = required ?? false %}
+{% set additionalAttributes = attributes ?? [] %}
+
+{% set classes = [
+	'block mb-1',
+    (labelClass ? labelClass : null),
+]|filter|join(' ') %}
+
+{% set attributes = [
+    (disabled ? 'disabled' : null),
+    (required ? 'required' : null),
+]|merge(additionalAttributes)|filter|join(' ') %}
+
+<label class="{{ classes }}" for="{{ id }}">
+	<input class="mr-2" type="radio" name="{{ name }}" value="{{ value }}" id="{{ id }}"{{ checked }}{{ disabled }}>{{ label }}
+</label>

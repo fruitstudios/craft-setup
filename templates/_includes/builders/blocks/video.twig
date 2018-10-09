@@ -1,0 +1,4 @@
+{% set poster = block.videoCoverImage.one().url() ?? false %}
+<video {% if poster %}poster="{{ poster }}"{% endif %} id="player" playsinline controls>
+    <source src="{{ block.video.one().url() }}" type="video/mp4">
+</video>

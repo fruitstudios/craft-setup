@@ -1,24 +1,15 @@
-{# Textarea Options Available #}
-
-{#
-	id: "myfieldId",
-	name: "myfieldName",
-	inputClass: "myfieldClass",
-	rows: "8",
-	columns: "50",
-	disabled: true/false,
-	value: "myfieldValue",
-	placeholder: "Field Placeholder",
-	dataAttributes: [
-	    ' autocomplete="off"'
-	]
- #}
+{# Textarea Input #}
 
 {% set rows = (rows is defined ? rows : 2) %}
 {% set cols = (cols is defined ? cols : 50) %}
+{% set disabled = disabled ?? false %}
+{% set editor = editor ?? false %}
+{% set limit = limit ?? false %}
+{% set required = required ?? false %}
+{% set additionalAttributes = attributes ?? [] %}
 
 {% set classes = [
-	'js-textarea',
+	'textarea bg-white',
 	(inputClass ?? null),
 ]|filter|join(' ') %}
 
@@ -26,11 +17,22 @@
     ((id ?? false) ? 'id="'~id~'"' : null),
     ((name ?? false) ? 'name="'~name~'"' : null),
     ((placeholder ?? false) ? 'placeholder="'~placeholder~'"' : null),
-	(disabled ? 'disabled' : null)
-]|merge(dataAttributes ?? [])|merge(attributes ?? [])|filter|join(' ') %}
+    ((limit ?? false) ? 'maxlength="'~limit~'"' : null),
+	(disabled ? 'disabled' : null),
+	(editor ? 'data-editor' : null),
+	(required ? 'required' : null)
+]|merge(additionalAttributes)|filter|join(' ') %}
 
-<div class="field-input">
-	<textarea class="{{ classes }}" rows="{{ rows }}" cols="{{ cols }}" {{ attributes|raw }}>
-		{{ value is defined ? value : null }}
-	</textarea>
+<div class="field-input js-input">
+	<textarea class="{{ classes }}" rows="{{ rows }}" cols="{{ cols }}"{{ attributes|raw }}>{{ value ?? null }}</textarea>
+	{% if limit %}
+		<p class="text-xs">
+			<span class="js-limit">{{ limit }}</span>
+			characters left
+		</p>
+	 {% endif %}
 </div>
+
+{% if editor %}
+	{% do view.registerCssFile('//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css') %}
+{% endif %}

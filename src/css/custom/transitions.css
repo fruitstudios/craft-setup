@@ -1,0 +1,7 @@
+.trans {
+	transition: 0.1s;
+}
+
+.trans:hover {
+	transition: 0.1s;
+}

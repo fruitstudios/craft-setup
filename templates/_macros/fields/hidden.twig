@@ -1,0 +1,13 @@
+{# Hidden Input #}
+
+{% set id = id ?? false %}
+{% set name = name ?? false %}
+{% set value = value ?? false %}
+
+{% set attributes = [
+	(id ? 'id="'~id~'"' : null),
+	(name ? 'name="'~name~'"' : null),
+	(value ? 'value="'~value~'"' : null),
+]|merge(attributes ?? [])|filter|join(' ') %}
+
+<input type="hidden" {{ attributes|raw }}>

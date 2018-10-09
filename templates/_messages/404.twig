@@ -1,8 +1,15 @@
 {% extends "_layouts/auth.twig" %}
+{% import "_macros" as macros %}
 
 {# Set Meta #}
 {% set title = '(404) Page not found' %}
-{% set description = 'The requested URL was not found on this server.' %}
+{% set description = 'The requested page could not be found' %}
 
 {% block content %}
+
+	<div class="mb-8 pt-8 mx-auto text-center">
+		<h1>{{ title }}</h1>
+		<p>{{ description }}</p>
+	</div>
+
 {% endblock %}

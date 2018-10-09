@@ -1,0 +1,51 @@
+{% set floated = block.wrapTextAroundTheImage|length %}
+
+{% switch block.imagePosition %}
+
+	{% case "left" %}
+		{% set imagePosition = floated ? 'float-left mr-4' : 'mr-4' %}
+		{% set imageAlign = 'flex-row' %}
+
+	{% case "right" %}
+		{% set imagePosition = floated ? 'float-right ml-4' : 'ml-4' %}
+		{% set imageAlign = 'flex-row-reverse' %}
+
+{% endswitch %}
+
+{% switch block.imageSize %}
+
+	{% case "small" %}
+		{% set imageWidth = 'w-1/4' %}
+
+	{% case "medium" %}
+		{% set imageWidth = 'w-1/3' %}
+
+	{% case "large" %}
+		{% set imageWidth = 'w-1/2' %}
+
+{% endswitch %}
+
+{% set wrapperClasses = [
+	'block',
+	(floated ? 'clearfix' : 'flex'),
+	(imageAlign ?? false),
+	(spacing|default('mb-4'))
+]|filter|join(' ') %}
+
+{% set imageClasses = [
+	'mb-1',
+	(floated ? '' : 'flex-no-shrink'),
+	(imageWidth|default('w-1/4')),
+	(imagePosition|default('float-none mr-4'))
+]|filter|join(' ') %}
+
+<div class="{{ wrapperClasses }}">
+
+	<div class="{{ imageClasses }}">
+		<img class="block" src="{{ block.image.one().url() }}">
+	</div>
+
+	<div class="rte">
+	    {{ block.text }}
+	</div>
+</div>

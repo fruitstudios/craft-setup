@@ -1,0 +1,157 @@
+[
+    {
+        "name": "Enable Drift",
+        "handle": "enableDrift",
+        "instructions": "",
+        "required": null,
+        "translationMethod": "none",
+        "translationKeyFormat": null,
+        "type": "craft\\fields\\Lightswitch",
+        "settings": {
+            "default": ""
+        }
+    },
+    {
+        "name": "Enable Facebook Pixel",
+        "handle": "enableFacebookPixel",
+        "instructions": "",
+        "required": null,
+        "translationMethod": "none",
+        "translationKeyFormat": null,
+        "type": "craft\\fields\\Lightswitch",
+        "settings": {
+            "default": ""
+        }
+    },
+    {
+        "name": "Enable Fullstory",
+        "handle": "enableFullstory",
+        "instructions": "",
+        "required": null,
+        "translationMethod": "none",
+        "translationKeyFormat": null,
+        "type": "craft\\fields\\Lightswitch",
+        "settings": {
+            "default": ""
+        }
+    },
+    {
+        "name": "Facebook Username",
+        "handle": "facebookUsername",
+        "instructions": "",
+        "required": null,
+        "translationMethod": "none",
+        "translationKeyFormat": null,
+        "type": "craft\\fields\\PlainText",
+        "settings": {
+            "placeholder": "username",
+            "code": "",
+            "multiline": "",
+            "initialRows": 4,
+            "charLimit": "",
+            "columnType": "text"
+        }
+    },
+    {
+        "name": "Google Adwords",
+        "handle": "googleAdwordsId",
+        "instructions": "Google Adwords Tracking ID (AW).",
+        "required": null,
+        "translationMethod": "none",
+        "translationKeyFormat": null,
+        "type": "craft\\fields\\PlainText",
+        "settings": {
+            "placeholder": "AW-758476542",
+            "code": "",
+            "multiline": "",
+            "initialRows": 4,
+            "charLimit": "",
+            "columnType": "string"
+        }
+    },
+    {
+        "name": "Google Analytics",
+        "handle": "googleAnalyticsId",
+        "instructions": "Google Analytics Tracking ID (GTAG).",
+        "required": null,
+        "translationMethod": "none",
+        "translationKeyFormat": null,
+        "type": "craft\\fields\\PlainText",
+        "settings": {
+            "placeholder": "UA-378476545-1",
+            "code": "",
+            "multiline": "",
+            "initialRows": 4,
+            "charLimit": "",
+            "columnType": "string"
+        }
+    },
+    {
+        "name": "Google Tag Manager",
+        "handle": "googleTagManagerId",
+        "instructions": "Google Tag Manager ID (GTM)",
+        "required": null,
+        "translationMethod": "none",
+        "translationKeyFormat": null,
+        "type": "craft\\fields\\PlainText",
+        "settings": {
+            "placeholder": "GTM-A345RTF",
+            "code": "",
+            "multiline": "",
+            "initialRows": 4,
+            "charLimit": "",
+            "columnType": "string"
+        }
+    },
+    {
+        "name": "Instagram Username",
+        "handle": "instagramUsername",
+        "instructions": "",
+        "required": null,
+        "translationMethod": "none",
+        "translationKeyFormat": null,
+        "type": "craft\\fields\\PlainText",
+        "settings": {
+            "placeholder": "username",
+            "code": "",
+            "multiline": "",
+            "initialRows": 4,
+            "charLimit": "",
+            "columnType": "text"
+        }
+    },
+    {
+        "name": "Linkedin Username",
+        "handle": "linkedinUsername",
+        "instructions": "",
+        "required": null,
+        "translationMethod": "none",
+        "translationKeyFormat": null,
+        "type": "craft\\fields\\PlainText",
+        "settings": {
+            "placeholder": "username",
+            "code": "",
+            "multiline": "",
+            "initialRows": 4,
+            "charLimit": "",
+            "columnType": "text"
+        }
+    },
+    {
+        "name": "Twitter Username",
+        "handle": "twitterUsername",
+        "instructions": "",
+        "required": null,
+        "translationMethod": "none",
+        "translationKeyFormat": null,
+        "type": "craft\\fields\\PlainText",
+        "settings": {
+            "placeholder": "username",
+            "code": "",
+            "multiline": "",
+            "initialRows": 4,
+            "charLimit": "",
+            "columnType": "text"
+        }
+    }
+]

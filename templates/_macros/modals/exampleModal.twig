@@ -1,0 +1,14 @@
+{% import "_macros" as macros %}
+
+{% set content %}
+    <div class="mx-auto h-full p-3 text-center">
+    	<h2 class="text-3xl tracking-tight text-center mb-4">Modal Title</h2>
+		<p>Content</p>
+	</div>
+{% endset %}
+
+{{ macros.modal({
+    id: 'modalId',
+    content: content
+}) }}
+

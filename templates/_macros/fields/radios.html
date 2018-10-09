@@ -1,0 +1,14 @@
+{# Radios Wrapper #}
+
+{% import "_macros" as macros %}
+{% set id = id ?? ('radios-'~random()) %}
+{% set heading = heading ?? false %}
+{% set radios = radios ?? [] %}
+
+{% if heading %}
+	<label for="">{{ heading }}</label>
+{% endif %}
+
+{% for radio in radios %}
+	{{ macros.radio(radio) }}
+{% endfor %}

@@ -1,8 +1,15 @@
 {% extends "_layouts/auth.twig" %}
+{% import "_macros" as macros %}
 
 {# Set Meta #}
 {% set title = '(403) Unauthorized' %}
 {% set description = 'You don’t have permission to access this page.' %}
 
 {% block content %}
+
+	<div class="mb-8 pt-8 mx-auto text-center">
+		<h1>{{ title }}</h1>
+		<p>{{ description }}</p>
+	</div>
+
 {% endblock %}

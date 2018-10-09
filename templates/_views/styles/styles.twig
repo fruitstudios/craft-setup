@@ -1,0 +1,201 @@
+{% extends "_layouts/main.twig" %}
+{% import "_macros" as macros %}
+
+{# Set Meta #}
+{% set title = 'Style Guide' %}
+
+{% block content %}
+
+	<div class="md:w-1/3 px-4 mx-auto py-4">
+
+		<h1 class="text-3xl">{{ siteName }}</h1>
+		<h2 class="text-2xl mb-4">Style Guide</h2>
+
+		<p class="mb-4 underline">Heading Styles</p>
+
+		<h1 class="text-5xl">H1 Heading</h1>
+		<h2 class="text-4xl">H2 Heading</h2>
+		<h3 class="text-3xl">H3 Heading</h3>
+		<h4 class="text-2xl">H4 Heading</h4>
+		<h5 class="text-xl">H5 Heading</h5>
+		<h6 class="text-lg mb-8">H6 Heading</h6>
+
+		<p class="mb-4 underline">Text Styles</p>
+		<p class="mb-8">
+			Lorem ipsum dolor sit <strong>bold text</strong> adipiscing elit auctor tincidunt elementum nam <u>underline text </u>laoreet, sollicitudin congue vivamus pretium morbi aenean cras viverra euismod montes etiam.
+		</p>
+
+		<p class="mb-8">
+			<a href="#">Text Link Default Style</a>
+		</p>
+
+		<ul class="mb-8">
+			<li>List Item One</li>
+			<li>List Item Two</li>
+			<li>List Item Three</li>
+		</ul>
+
+
+		<ol class="mb-8">
+			<li>List Item One</li>
+			<li>List Item Two</li>
+			<li>List Item Three</li>
+		</ol>
+
+
+		<div class="mb-8">
+			<p class="mb-4 underline">Form Styles</p>
+
+		{{ macros.textField({
+			name: 'plaintext',
+			label: 'Text field',
+			value: '',
+			placeholder: "Placeholder Text",
+			required: true
+		}) }}
+
+		{{ macros.textField({
+			name: 'twitter',
+			label: 'Twitter Input',
+			inputClass: 'input-twitter',
+			value: '',
+			placeholder: "e.g. @fruitstudios",
+		}) }}
+
+		{{ macros.textField({
+			name: 'facebook',
+			label: 'Facebook Input',
+			inputClass: 'input-facebook',
+			value: '',
+			placeholder: "e.g. @fruitstudios",
+		}) }}
+
+		{{ macros.textField({
+			name: 'instagram',
+			label: 'Instagram Input',
+			inputClass: 'input-instagram',
+			value: '',
+			placeholder: "e.g. @fruitstudios",
+		}) }}
+
+		{{ macros.passwordField({
+			name: 'password',
+			label: 'Password',
+			value: '',
+			type: 'password',
+			forgotPassword: true,
+			placeholder: "Placeholder Text",
+			required: true
+		}) }}
+
+		{{ macros.textareaField({
+			name: 'textarea',
+			label: 'Textarea Field',
+			value: '',
+			placeholder: "Placeholder Text",
+			required: true,
+			rows: 12,
+			limit: 120
+		}) }}
+
+		{{ macros.selectField({
+			name: 'select',
+			label: 'Select Field',
+			value: '',
+			options: {
+				'': 'Choose...',
+				'0': '0',
+				'1': '1',
+				'2': '2'
+			},
+		}) }}
+
+		{{ macros.checkboxField({
+			name: 'checkbox',
+			label: 'Checkbox field with label',
+			checkboxLabel: 'Sign me up!',
+			checked: false,
+			postIfUnchecked: true,
+		}) }}
+
+		{{ macros.checkboxField({
+			name: 'checkbox',
+			checkboxLabel: 'Sign me up!',
+			checked: false,
+			postIfUnchecked: true,
+		}) }}
+
+		{% set radios = [] %}
+        {% set radios = radios|merge([{
+            name: 'radio',
+			label: 'Radio Option 1',
+			value: '',
+			checked: false,
+        }]) %}
+        {% set radios = radios|merge([{
+            name: 'radio',
+			label: 'Radio Option 2',
+			value: '',
+			checked: false,
+        }]) %}
+
+		{{ macros.radiosField({
+			name: 'Radios',
+			label: 'Radios field',
+			value: '',
+			radios: radios,
+			checked: false,
+		}) }}
+
+		{% set checkboxes = [] %}
+        {% set checkboxes = checkboxes|merge([{
+            name: 'checkboxes[]',
+            checkboxLabel: 'Checkbox 1',
+            checked: false,
+            checkedValue: '',
+            postIfUnchecked: false,
+        }]) %}
+
+        {% set checkboxes = checkboxes|merge([{
+            name: 'checkboxes[]',
+            checkboxLabel: 'Checkbox 2',
+            checked: false,
+            checkedValue: '',
+            postIfUnchecked: false,
+        }]) %}
+
+		{{ macros.checkboxesField({
+			label: 'Checkboxes Field',
+			checkboxes: checkboxes
+		}) }}
+
+		{{ macros.dateTimeField({
+			name: 'dateTimeField',
+			label: 'Date Time Field',
+			value: ''
+		}) }}
+
+		{{ macros.dateSelectField({
+			name: 'dateSelectField',
+			label: 'Date Time Field',
+			value: ''
+		}) }}
+
+		{{ macros.priceField({
+			name: 'dateSelectField',
+			label: 'Price',
+			value: ''
+		}) }}
+
+		{{ macros.dataselectField({
+			name: 'dateSelectField',
+			label: 'Data Select Field',
+			value: ''
+		}) }}
+
+		{{ macros.submit({
+			submitText: 'Submit',
+		}) }}
+
+	</div>
+{% endblock %}

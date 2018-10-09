@@ -1,0 +1,75 @@
+{# Date Dropdowns Input #}
+
+{% import "_macros" as macros %}
+
+{% set id = id ?? ('dateSelects-'~random()) %}
+{% set name = name ?? '' %}
+{% set value = value ?? false %}
+{% set required = required ?? false %}
+{% set additionalAttributes = attributes ?? [] %}
+
+{% set attributes = [
+	'data-dateselect',
+    (minDate ?? false) ? 'data-mindate="'~minDate~'"' : null,
+    (maxDate ?? false) ? 'data-maxdate="'~maxDate~'"' : null,
+    (required ? 'required' : null)
+]|merge(additionalAttributes)|filter|join(' ') %}
+
+{% set classes = [
+    'flex -mx-1',
+    (inputClass ?? null),
+]|filter|join(' ') %}
+
+<span class="{{ classes }}" {{ attributes|raw }}>
+
+    {{ macros.hidden({
+        id: id,
+        name: name,
+        value: value ? value|date('Y-m-d 00:00:00') : '',
+        attributes: [
+            'data-input'
+        ]
+    }) }}
+
+    <div class="w-2/6 px-1">
+        {{ macros.select({
+            options: [],
+            attributes: [
+                'data-day="'~(value ? value|date('j') : '')~'"'
+            ]
+        }) }}
+    </div>
+
+    <div class="w-2/6 px-1">
+        {{ macros.select({
+            options: {
+              January: 'January',
+              February: 'February',
+              March: 'March',
+              April: 'April',
+              May: 'May',
+              June: 'June',
+              July: 'July',
+              August: 'August',
+              September: 'September',
+              October: 'October',
+              November: 'November',
+              December: 'December',
+            },
+            value: value ? value|date('F') : 'January',
+            attributes: [
+                'data-month="'~(value ? value|date('F') : '')~'"'
+            ]
+        }) }}
+    </div>
+
+    <div class="w-2/6 px-1">
+        {{ macros.select({
+            options: [],
+            attributes: [
+                'data-year="'~(value ? value|date('Y') : '')~'"'
+            ]
+        }) }}
+    </div>
+
+</span>

@@ -1,0 +1,35 @@
+{% import "_macros" as macros %}
+{% set id = id ?? false %}
+{% if id %}
+
+    {% set close = close ?? true %}
+    {% set ajax = ajax ?? false %}
+
+    {% set size = size ?? 'md:w-2/3 lg:w-1/2' %}
+    {% set class = class ?? false %}
+
+    {% set content = content ?? '' %}
+
+    {% set classes = [
+        'modal',
+        (size ? size),
+        (class ? class : null),
+    ]|filter|join(' ') %}
+
+    {% set attributes = [
+        'data-modal-window',
+        (resetForms ?? false) ? 'data-modal-resetforms' : null,
+    ]|merge(attributes ?? [])|filter|join(' ') %}
+
+        <div id="{{ id }}" class="{{ classes }}" {{ attributes|raw }} >
+
+            {% if close %}
+            	<button class="close group" data-modal-close>
+                 {{ macros.icon({ icon: 'cancel', classes: 'text-primary-lighter trans group-hover:text-primary fill-current w-4 h-4'}) }}
+                </button>
+            {% endif %}
+
+            {{ content|raw }}
+
+        </div>
+{% endif %}

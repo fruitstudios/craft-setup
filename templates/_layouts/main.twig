@@ -1,23 +1,16 @@
-{#
-    Layout for standard pages
+ {#
+    Main wrapper for standard pages
     -------------------------
 
 #}
 
 {% extends "_layouts/_base.twig" %}
+{% import "_macros" as macros %}
 
 {% block body %}
 
-	{# Main wrapper for the page #}
-	<main class="container mx-auto">
-
-		{# Page header and title #}
-		<h1>{{ title }}</h1>
-		<p>{{ description }}</p>
-
-		{# The page content #}
+	<main>
 		{% block content %}{% endblock %}
-
 	</main>
 
 {% endblock %}

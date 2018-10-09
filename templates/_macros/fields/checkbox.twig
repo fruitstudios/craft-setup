@@ -1,0 +1,22 @@
+{# Checkbox Input #}
+
+{% set id = id ?? ('checkbox-'~random()) %}
+{% set name = name ?? ('option-'~random()) %}
+{% set checked = checked ?? false ? ' checked' : '' %}
+{% set checkboxLabel = checkboxLabel ?? '' %}
+{% set checkboxClass = checkboxClass ?? false %}
+{% set postIfUnchecked = postIfUnchecked ?? true %}
+{% set checkedValue = checkedValue ?? 1 %}
+{% set uncheckedValue = uncheckedValue ?? 0 %}
+
+{% set classes = [
+    'flex items-center mb-1',
+    (checkboxClass ? checkboxClass : null)
+]|filter|join(' ') %}
+
+{% if postIfUnchecked %}<input type="hidden" name="{{ name }}" value="{{ uncheckedValue }}">{% endif %}
+
+<label class="{{ classes }}" for="{{ id }}">
+	<input class="mr-2" type="checkbox" name="{{ name }}" value="{{ checkedValue }}" id="{{ id }}"{{ checked }}>
+	<span class="truncate pr-2">{{ checkboxLabel }}</span>
+</label>

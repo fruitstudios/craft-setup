@@ -1,0 +1,46 @@
+{# Datepicker Input #}
+
+{% import "_macros" as macros %}
+
+{% set name = name ?? '' %}
+{% set value = value ?? false %}
+{% set required = required ?? false %}
+{% set additionalAttributes = attributes ?? [] %}
+{% set mode = mode ?? 'single' %}
+
+{% set attributes = [
+	'data-datepicker',
+    (time ?? false) ? 'data-option-time="'~time~'"' : null,
+    (minDate ?? false) ? 'data-option-mindate="'~minDate~'"' : null,
+    (maxDate ?? false) ? 'data-option-maxdate="'~maxDate~'"' : null,
+    (mode ?? false) ? 'data-option-mode="'~mode~'"' : null,
+    (required ? 'required' : null)
+]|merge(additionalAttributes)|filter|join(' ') %}
+
+{% set classes = [
+    'input',
+    (inputClass ?? null),
+]|filter|join(' ') %}
+
+<span>
+    {% if mode == 'range' %}
+
+        {% set fromValue = (from.value ?? false) ? from.value.date : '' %}
+        {% set toValue = (to.value ?? false) ? to.value.date : '' %}
+        {% set inputValue = [
+            (fromValue != '' ? fromValue : null),
+            (toValue != '' ? toValue : null),
+        ]|filter|join(' to ') %}
+
+        <input class="{{ classes }}" type="text" name="" value="{{ inputValue }}" placeholder="Select Date.." {{ attributes|raw }} data-input>
+        <input type="hidden" name="{{ from.name ?? (name~'[from]') }}" value="{{ fromValue }}" data-date-from>
+        <input type="hidden" name="{{ to.name ?? (name~'[to]') }}" value="{{ toValue }}" data-date-to>
+        <a class="date-clear" data-clear></a>
+
+    {% else %}
+
+        <input class="{{ classes }}" type="text" name="{{ name }}" value="{{ value ? value.date : '' }}" placeholder="Select Date.." {{ attributes|raw }} data-input>
+        <a class="date-clear" data-clear></a>
+
+    {% endif %}
+</span>

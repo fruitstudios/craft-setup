@@ -1,0 +1,44 @@
+{%- set user %}
+    {%- if currentUser -%}
+        {
+            id: {{ currentUser.id }},
+            admin: {{ currentUser.admin ? 'true' : 'false' }},
+            name: '{{ currentUser.fullName }}',
+            friendlyName: '{{ currentUser.friendlyName }}',
+            firstName: '{{ currentUser.firstName }}',
+            lastName: '{{ currentUser.lastName }}',
+            email: '{{ currentUser.email }}'
+        }
+    {%- else -%}
+        false
+    {%- endif -%}
+{% endset -%}
+
+{%- set site %}
+    {
+        id: {{ currentSite.id }}
+    }
+{% endset -%}
+
+{% set stripeKeys = craft.stripe.settings.keys ?? false %}
+{% if stripeKeys %}
+{%- set stripe %}
+    {
+        live: '{{ craft.stripe.settings.liveMode ? 'true' : 'false' }}',
+        publishableKey: '{{ stripeKeys.publishableKey }}'
+    }
+{% endset -%}
+{% endif %}
+
+<script type="text/javascript" src="{{ baseUrl }}build/js/app{{ devMode ? '' : '.min.' ~ staticAssetsVersion }}.js"></script>
+<script type="text/javascript">
+    ready(function () {
+        app.api.init({
+            csrfTokenName: '{{ craft.app.config.general.csrfTokenName | e('js') }}',
+            csrfToken: '{{ craft.app.request.csrfToken | e('js') }}',
+            user: {{ user }},
+            site: {{ site }},
+            stripe: {{ stripe ?? 'false' }},
+        });
+    });
+</script>

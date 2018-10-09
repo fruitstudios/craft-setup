@@ -1,0 +1,27 @@
+{# Price Input #}
+
+{% set id = id ?? ('input-'~random()) %}
+{% set name = name ?? '' %}
+{% set type = type ?? 'number' %}
+{% set value = value ?? '' %}
+{% set disabled = disabled ?? false %}
+{% set required = required ?? false %}
+{% set fieldClass = fieldClass ?? false %}
+{% set additionalAttributes = attributes ?? [] %}
+
+{% set classes = [
+    'input-price w-24',
+    (inputClass ?? null),
+]|filter|join(' ') %}
+
+{% set attributes = [
+    (disabled ? 'disabled' : null),
+    (required ? 'required' : null),
+    ((placeholder ?? false) ? 'placeholder="'~placeholder~'"' : null),
+]|merge(additionalAttributes)|filter|join(' ') %}
+
+<div class="relative flex">
+    <span class="inline-flex items-center px-3 border border-r-0 rounded-l {{ disabled ? 'opacity-50 cursor-not-allowed'}}">&pound;</span>
+    <input id="{{ id }}" class="{{ classes }}" type="{{ type }}" name="{{ name }}" value="{{ value }}"{{ attributes|raw }}>
+</div>
+

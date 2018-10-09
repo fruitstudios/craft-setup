@@ -1,0 +1,26 @@
+<div class="{{ spacing|default('mb-4') }}">
+
+	{% set style = block.linkStyle %}
+	{% set linkStyle = 'btn-blue' %}
+
+	{% switch style %}
+
+		{% case "primary" %}
+
+			{% set linkStyle = 'btn-blue' %}
+
+		{% case "secondary" %}
+
+			{% set linkStyle = 'btn-grey' %}
+
+		{% default %}
+
+
+	{% endswitch %}
+
+
+	{{ block.linkit.link({
+	    class: 'btn '~linkStyle~' inline-block mr-2',
+	}) }}
+
+</div>

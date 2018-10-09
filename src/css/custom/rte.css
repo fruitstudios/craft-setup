@@ -1,0 +1,18 @@
+.rte p {
+  @apply .mb-4;
+}
+.rte p:last-child {
+  @apply .mb-0;
+}
+
+.rte a {
+	@apply .text-blue;
+}
+
+.rte ul {
+	@apply .mb-8;
+}
+
+.rte li {
+	@apply .mb-2;
+}

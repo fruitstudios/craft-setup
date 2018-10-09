@@ -2,17 +2,32 @@
  * This injects Tailwind's base styles, which is a combination of
  * Normalize.css and some additional base styles.
  */
+
 @tailwind preflight;
-
-/* -- Basics */
-:root {
-
-}
+@tailwind components;
 
 html {
-    @apply .text-black .font-sans .leading-normal .antialiased;
-    box-sizing: border-box;
+	@apply .font-sans;
 }
 
-@tailwind utilities;
+/* -- Front End Editor -- */
+@import 'vendor/medium-editor/default.css';
+@import 'vendor/medium-editor/tim.css';
+@import 'vendor/medium-editor/sodc.css';
 
+/* -- Vendor CSS Files -- */
+@import 'vendor/flatpickr.css';
+@import 'vendor/choices.css';
+
+/* -- Custom CSS -- */
+@import 'custom/buttons.css';
+@import 'custom/fonts.css';
+@import 'custom/forms.css';
+@import 'custom/headings.css';
+@import 'custom/ie.css';
+@import 'custom/rte.css';
+@import 'custom/spinner.css';
+@import 'custom/toasts.css';
+@import 'custom/transitions.css';
+
+@tailwind utilities;

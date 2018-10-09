@@ -3,21 +3,20 @@
  #}
 
 {# Elements #}
-{% macro icon(config) %}
-	{% include "_macros/elements/icon" with (config ?? {}) only %}
-{% endmacro %}
 
-{% macro alert(config) %}
-	{% include "_macros/elements/alert" with (config ?? {}) only %}
-{% endmacro %}
+{# Components #}
 
 {# Fields #}
 {% macro field(config, input) %}
 	{% include "_macros/fields/field" with (config ?? {})|merge({ input: input }) only %}
 {% endmacro %}
 
+{% macro hidden(config) %}
+	{% include "_macros/fields/hidden" with (config ?? {}) only %}
+{% endmacro %}
+
 {% macro text(config) %}
-	{% include "_macros/fields/text" with config only %}
+	{% include "_macros/fields/text" with (config ?? {}) only %}
 {% endmacro %}
 
 {% macro textField(config) %}
@@ -25,8 +24,26 @@
 	{{ macros.field((config ?? {})|merge({ type: 'text' }), macros.text(config)) }}
 {% endmacro %}
 
+{% macro password(config) %}
+	{% include "_macros/fields/password" with (config ?? {}) only %}
+{% endmacro %}
+
+{% macro passwordField(config) %}
+	{% import "_macros" as macros %}
+	{{ macros.field((config ?? {})|merge({ type: 'password' }), macros.password(config)) }}
+{% endmacro %}
+
+{% macro price(config) %}
+	{% include "_macros/fields/price" with (config ?? {}) only %}
+{% endmacro %}
+
+{% macro priceField(config) %}
+	{% import "_macros" as macros %}
+	{{ macros.field((config ?? {})|merge({ type: 'text' }), macros.price(config)) }}
+{% endmacro %}
+
 {% macro textarea(config) %}
-	{% include "_macros/fields/textarea" with config only %}
+	{% include "_macros/fields/textarea" with (config ?? {}) only %}
 {% endmacro %}
 
 {% macro textareaField(config) %}
@@ -35,7 +52,7 @@
 {% endmacro %}
 
 {% macro select(config) %}
-	{% include "_macros/fields/select" with config only %}
+	{% include "_macros/fields/select" with (config ?? {}) only %}
 {% endmacro %}
 
 {% macro selectField(config) %}
@@ -43,18 +60,155 @@
 	{{ macros.field((config ?? {})|merge({ type: 'select' }), macros.select(config)) }}
 {% endmacro %}
 
+{% macro dateTime(config) %}
+	{% include "_macros/fields/dateTime" with (config ?? {}) only %}
+{% endmacro %}
+
+{% macro dateTimeField(config) %}
+	{% import "_macros" as macros %}
+	{{ macros.field((config ?? {})|merge({ type: 'dateTime' }), macros.dateTime(config)) }}
+{% endmacro %}
+
+{% macro dateSelect(config) %}
+	{% include "_macros/fields/dateSelect" with (config ?? {}) only %}
+{% endmacro %}
+
+{% macro dateSelectField(config) %}
+	{% import "_macros" as macros %}
+	{{ macros.field((config ?? {})|merge({ type: 'dateSelect' }), macros.dateSelect(config)) }}
+{% endmacro %}
+
+{% macro dataSelect(config) %}
+	{% import "_macros" as macros %}
+
+	{{ (config.name ?? false) ? macros.hidden({
+		name: config.name,
+		value: ''
+	}) }}
+
+	{{ macros.select((config ?? {})|merge({
+		multiple: config.multiple ?? true,
+		attributes: (config.attributes ?? []) |merge(['data-dataselect'])
+	})) }}
+{% endmacro %}
+
+{% macro dataSelectField(config) %}
+	{% import "_macros" as macros %}
+	{{ macros.field((config ?? {})|merge({ type: 'dataSelect' }), macros.dataSelect(config)) }}
+{% endmacro %}
+
+{% macro checkbox(config) %}
+	{% include "_macros/fields/checkbox" with (config ?? {}) only %}
+{% endmacro %}
+
+{% macro checkboxField(config) %}
+	{% import "_macros" as macros %}
+	{{ macros.field((config ?? {})|merge({ type: 'checkbox' }), macros.checkbox(config)) }}
+{% endmacro %}
+
+{% macro checkboxes(config) %}
+	{% include "_macros/fields/checkboxes" with (config ?? {}) only %}
+{% endmacro %}
+
+{% macro checkboxesField(config) %}
+	{% import "_macros" as macros %}
+	{{ macros.field((config ?? {})|merge({ type: 'checkboxes' }), macros.checkboxes(config)) }}
+{% endmacro %}
+
+{% macro radio(config) %}
+	{% include "_macros/fields/radio" with (config ?? {}) only %}
+{% endmacro %}
+
+{% macro radioField(config) %}
+	{% import "_macros" as macros %}
+	{{ macros.field((config ?? {})|merge({ type: 'radio' }), macros.radio(config)) }}
+{% endmacro %}
+
+{% macro radios(config) %}
+	{% include "_macros/fields/radios" with (config ?? {}) only %}
+{% endmacro %}
+
+{% macro radiosField(config) %}
+	{% import "_macros" as macros %}
+	{{ macros.field((config ?? {})|merge({ type: 'radios' }), macros.radios(config)) }}
+{% endmacro %}
+
+{% macro payment(config) %}
+	{% include "_macros/fields/payment" with (config ?? {}) only %}
+{% endmacro %}
+
+{% macro paymentField(config) %}
+	{% import "_macros" as macros %}
+	{{ macros.field((config ?? {})|merge({ type: 'payment' }), macros.payment(config)) }}
+{% endmacro %}
+
+{% macro location(config) %}
+	{% include "_macros/fields/location" with (config ?? {}) only %}
+{% endmacro %}
+
+{% macro locationField(config) %}
+	{% import "_macros" as macros %}
+	{{ macros.field((config ?? {})|merge({ type: 'location' }), macros.location(config)) }}
+{% endmacro %}
+
 {% macro submit(config) %}
-	{% include "_macros/fields/submit" with config only %}
+	{% include "_macros/fields/submit" with (config ?? {}) only %}
 {% endmacro %}
 
 {# Forms #}
 
 {% macro form(config) %}
-	{% include "_macros/forms/form" with config only %}
+	{% include "_macros/forms/form" with (config ?? {}) only %}
 {% endmacro %}
 
 {% macro exampleForm(config) %}
-	{% include "_macros/forms/exampleForm" with config only %}
+	{% include "_macros/forms/exampleForm" with (config ?? {}) only %}
+{% endmacro %}
+
+{# Matrix #}
+
+{% macro matrixField(config) %}
+	{% import "_macros" as macros %}
+	{{ macros.field((config ?? {})|merge({ type: 'matrix' }), macros.matrix(config)) }}
 {% endmacro %}
 
 
+{% macro matrix(config) %}
+	{% include "_macros/matrix/matrix" with (config ?? {}) only %}
+{% endmacro %}
+
+{% macro matrixBlock(config) %}
+	{% include "_macros/matrix/" ~ (config.name ?? 'none') ~ "/index" ignore missing with (config ?? {}) only %}
+{% endmacro %}
+
+{# Modals #}
+
+{% macro modal(config) %}
+	{% import "_macros" as macros %}
+	{% include "_macros/modals/modal" with (config ?? {}) only %}
+{% endmacro %}
+
+{% macro loginModal(config) %}
+	{% import "_macros" as macros %}
+	{% include "_macros/modals/loginModal" with (config ?? {}) only %}
+{% endmacro %}
+
+{% macro registerModal(config) %}
+	{% import "_macros" as macros %}
+	{% include "_macros/modals/registerModal" with (config ?? {}) only %}
+{% endmacro %}
+
+{% macro inviteFriendsModal(config) %}
+	{% import "_macros" as macros %}
+	{% include "_macros/modals/inviteFriendsModal" with (config ?? {}) only %}
+{% endmacro %}
+
+{% macro findFriendsModal(config) %}
+	{% import "_macros" as macros %}
+	{% include "_macros/modals/findFriendsModal" with (config ?? {}) only %}
+{% endmacro %}
+
+{% macro conversationModal(config) %}
+	{% import "_macros" as macros %}
+	{% include "_macros/modals/conversationModal" with (config ?? {}) only %}
+{% endmacro %}

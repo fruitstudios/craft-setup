@@ -1,0 +1,11 @@
+{# Payment wrapper #}
+
+{% set classes = [
+    'payment-field-wrapper',
+]|filter|join(' ') %}
+
+<div class="{{ classes }}" data-payment-field>
+
+	<div class="payment-field--element" data-payment-field-card></div>
+
+</div>

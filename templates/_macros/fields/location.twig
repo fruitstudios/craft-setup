@@ -1,0 +1,124 @@
+{# Map/Location Input - For use with Simplemap #}
+
+{% import "_macros" as macros %}
+
+{% set id = id ?? ('location-'~random()) %}
+{% set name = name ?? '' %}
+
+{% set value = value ?? false %}
+{% set height = height ?? 240 %}
+{% set show = show ?? [
+    'map',
+    'address',
+    'lat',
+    'lng',
+    'zoom'
+] %}
+
+{% set classes = [
+    (inputClass ?? null),
+]|filter|join(' ') %}
+
+{% if 'address' in show %}
+
+    {{ macros.text({
+        id: id~'-address',
+        name: name~'[address]',
+        type: 'text',
+        value: value.address ?? value ?? '',
+        placeholder: placeholder ?? 'Address, City or Postcode',
+    }) }}
+
+{% else %}
+
+    {{ macros.hidden({
+        id: id~'-address',
+        name: name~'[address]',
+        value: value.address ?? '',
+    }) }}
+
+{% endif %}
+
+<div class="flex">
+
+    {% if 'lat' in show %}
+
+        {{ macros.text({
+            id: id~'-input-lat',
+            name: name~'[lat]',
+            type: 'text',
+            value: value.lat ?? '',
+            placeholder: 'Lattitude',
+            inputClass: 'mb-4'
+        }) }}
+
+    {% else %}
+
+        {{ macros.hidden({
+            id: id~'-input-lat',
+            name: name~'[lat]',
+            value: value.lat ?? '',
+        }) }}
+
+    {% endif %}
+
+    {% if 'lng' in show %}
+
+        {{ macros.text({
+            id: id~'-input-lng',
+            name: name~'[lng]',
+            type: 'text',
+            value: value.lng ?? '',
+            placeholder: 'Longitude',
+            inputClass: 'mb-4'
+        }) }}
+
+    {% else %}
+
+        {{ macros.hidden({
+            id: id~'-input-lng',
+            name: name~'[lng]',
+            value: value.lng ?? '',
+        }) }}
+
+    {% endif %}
+
+    {% if 'zoom' in show %}
+
+        {{ macros.text({
+            id: id~'-input-zoom',
+            name: name~'[zoom]',
+            type: 'text',
+            value: value.zoom ?? 12,
+            placeholder: 'Map Zoom',
+            inputClass: 'mb-4'
+        }) }}
+
+    {% else %}
+
+        {{ macros.hidden({
+            id: id~'-input-zoom',
+            name: name~'[zoom]',
+            value: value.zoom ?? 12,
+        }) }}
+
+    {% endif %}
+
+</div>
+
+
+<div id="{{ id }}" class="map"></div>
+
+{% do view.registerJsFile(alias('@baseUrl') ~ '/build/resources/js/simplemap.js') %}
+{% js %}
+    new SimpleMap('{{ craft.simpleMap.apiKey }}', '{{ id }}', {
+        lat: '{{ value.lat ?? craft.app.config.general.custom.defaultMapLat }}',
+        lng: '{{ value.lng ?? craft.app.config.general.custom.defaultMapLng }}',
+        zoom: '{{ value.zoom ?? craft.app.config.general.custom.defaultMapZoom }}',
+        height: '{{ height }}',
+        hideMap: {{ 'map' in show ? 'false' : 'true' }},
+        country: 'GB',
+        type: '',
+        boundary: ''
+    }, '');
+{% endjs %}

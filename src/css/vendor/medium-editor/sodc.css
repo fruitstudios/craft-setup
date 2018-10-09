@@ -1,0 +1,71 @@
+/* purgecss ignore */
+.medium-editor-element {
+    min-height: 140px !important;
+}
+
+/* purgecss ignore */
+.medium-editor-toolbar {
+    box-shadow: none;
+    border: 0;
+    background: config('colors.primary');
+    font-family: config('fonts.sans') !important;
+    font-size: 18px !important;
+}
+/* purgecss ignore */
+.medium-toolbar-arrow-under:after {
+    border-color: config('colors.primary') transparent transparent transparent;
+}
+/* purgecss ignore */
+.medium-toolbar-arrow-over:before {
+    border-color: transparent transparent config('colors.primary') transparent;
+}
+/* purgecss ignore */
+.medium-editor-toolbar li button {
+    background: config('colors.primary');
+    color: config('colors.white');
+    border-right: config('colors.white');
+    font-size: 18px !important;
+    font-weight: 500;
+}
+
+/* purgecss ignore */
+.medium-editor-toolbar li button:hover,
+.medium-editor-toolbar li .medium-editor-button-active {
+    background: config('colors.primary-darker');
+    color: config('colors.white');
+    border-right: config('colors.white');
+}
+
+/* purgecss ignore */
+.medium-editor-toolbar-form,
+.medium-editor-toolbar-anchor-preview {
+    background: config('colors.primary');
+    font-size: 14px;
+    padding: 4px 8px;
+    font-family: config('fonts.sans') !important;
+    font-size: 16px !important;
+}
+/* purgecss ignore */
+.medium-editor-toolbar-form a {
+    color: config('colors.white');
+}
+
+/* purgecss ignore */
+.medium-editor-toolbar-form .medium-editor-toolbar-input {
+    border-radius: 6px;
+    padding-left: 12px !important;
+    background: config('colors.primary');
+    color: config('colors.white');
+    font-family: config('fonts.sans') !important;
+    font-size: 16px !important;
+}
+
+/* purgecss ignore */
+.medium-editor-toolbar-form .medium-editor-toolbar-save {
+    display: none;
+}
+
+/* purgecss ignore */
+.medium-editor-placeholder:after {
+    color: config('colors.primary');
+}

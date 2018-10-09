@@ -1,46 +1,32 @@
-{#
-	An example for for editing a user profile
-	-----------------------------------------
-
-#}
-
 {% import "_macros" as macros %}
 
-{% if currentUser %}
+{% set sections = sections ?? false %}
+{% set sectionsToShow = sections ? sections : [
+	'section',
+	'section2',
+] %}
 
-	{# Show an alert if changes are made successfully #}
-	{% if craft.app.request.getParam('m') %}
-		{{ macros.alert({
-			alertTitle: 'Your changes have been saved',
-			alertSummary: 'Your contact details have been updated successfully'
-		})}}
-	{% endif %}
+{% set hidden = {
+    entryId : 999,
+    enabled: 1,
+    sectionId: 999,
+}|merge(hidden ?? {}) %}
 
-	{# Set the fields that will show #}
-	{% set fields %}
+{% set fields %}
+	{% if 'section' in sectionsToShow %}{% endif %}
+	{% if 'section2' in sectionsToShow %}{% endif %}
+{% endset %}
 
-		<input type="hidden" name="userId" value="{{ currentUser.id }}">
-		{{ redirectInput('{{ craft.app.request.pathInfo }}?m=saved') }}
+{% set successBlock %}
+	Success Message Here
+{% endset %}
 
-		{{ macros.textField({
-			name: 'firstName',
-			value: currentUser.firstName,
-			label: 'First Name'
-		}) }}
+{{ macros.form({
+	id: 'formId'),
+	action: 'site/entries/save-entry',
+	hidden: hidden,
+	fields: fields,
+	successBlock: successBlock
+	successToast: false
+}) }}
 
-		{{ macros.textField({
-			name: 'lastName',
-			value: currentUser.lastName,
-			label: 'Surname'
-		}) }}
-
-	{% endset %}
-
-	{# Pass these fields to the form wrapper #}
-	{{ macros.form({
-		id: 'profileForm',
-		action: 'users/save-user',
-		fields: fields
-	}) }}
-
-{% endif %}

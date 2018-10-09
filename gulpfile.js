@@ -10,6 +10,8 @@ const $ = require('gulp-load-plugins')({
     scope: ['devDependencies']
 });
 
+const autoprefixer = require('autoprefixer');
+
 // error logging
 const onError = (err) => {
     console.log(err);
@@ -32,29 +34,31 @@ gulp.task("css", () => {
     $.fancyLog("-> Compiling css");
     return gulp.src(pkg.paths.tailwind.src)
         .pipe($.plumber({ errorHandler: onError }))
+        .pipe($.cssimport())
         .pipe($.postcss([
             $.tailwindcss(pkg.paths.tailwind.config),
-            require("autoprefixer")
+            autoprefixer
         ]))
         .pipe($.purgecss({
             extractors: [{
                 extractor: TailwindExtractor,
+                whitelist: ['flatpickr-calendar'],
                 extensions: ["html", "twig", "css", "js"]
             }],
             content: [pkg.paths.build.templates]
         }))
-        .pipe($.size({ gzip: true, showFiles: true }))
+        .pipe($.size({ gzip: false, showFiles: true }))
         .pipe(gulp.dest(pkg.paths.build.css));
 });
 
-// Build the css for production (Purge & Minify)
 gulp.task("buildcss", () => {
     $.fancyLog("-> Compiling css");
     return gulp.src(pkg.paths.tailwind.src)
         .pipe($.plumber({ errorHandler: onError }))
+        .pipe($.cssimport())
         .pipe($.postcss([
             $.tailwindcss(pkg.paths.tailwind.config),
-            require("autoprefixer")
+            autoprefixer
         ]))
         .pipe($.purgecss({
             extractors: [{
@@ -64,7 +68,9 @@ gulp.task("buildcss", () => {
             content: [pkg.paths.build.templates]
         }))
         .pipe(gulp.dest(pkg.paths.build.css))
-        .pipe($.cssnano())
+        .pipe($.cssnano({
+            zindex: false
+        }))
         .pipe($.rename({
             suffix: '.min'
         }))
@@ -171,12 +177,10 @@ gulp.task('default', ['js', 'css', 'svg', 'images', 'fonts'], function() {
     gulp.watch(['src/images/**/*'], ['images']);
     gulp.watch(['src/fonts/**/*'], ['fonts']);
     gulp.watch(['src/js/**/*.js'], ['js']);
+    gulp.watch(['templates/**/*.twig'], ['css']);
     gulp.watch(['templates/**/*.twig'], function() {
         browserSync.reload();
     });
 });
 
-/*------------------------------------*\
-    BUILD TASK
-\*------------------------------------*/
 gulp.task("build", ["buildcss", "static-assets-version"]);

@@ -1,0 +1,3 @@
+{% set headingtype = block.headingType|default('h2') %}
+
+<{{ headingtype }} class="text-blue mb-4">{{ block.headingText|nl2br }}</{{ headingtype }}>

@@ -1,43 +1,88 @@
-{% set id = id ?? false %}
+{% import "_macros" as macros %}
+
+{% set id = id ?? ('form-'~random()) %}
+{% set formClass = formClass ?? false %}
+{% set csrf = csrf ?? true %}
 {% set action = action ?? false %}
+{% set actionUrl = actionUrl ?? false %}
 {% set fields = fields ?? false %}
 {% set method = method ?? 'post' %}
-
-
-{# Addition settings to be added #}
-
-{# {% set class = class ?? false %}
-{% set name = name ?? '' %}
-{% set formClass = [
-    (name ? name~'-form' : false ),
-    (class ? class : null),
-]|filter|join(' ') %}
-{% set actionUrl = actionUrl ?? false %}
-
-{% set redirect = redirect ?? false %}
-{% set csrf = csrf ?? craft.config.enableCsrfProtection %}
-{% set method = method ?? 'post' %}
-
-{% set hiddenInputs = hiddenInputs ?? false %}
-{% set hideSubmit = hideSubmit ?? false %}
 {% set submitText = submitText ?? 'Submit' %}
-{% set submitClass = submitClass ?? '' %}
+{% set wrapperClass = wrapperClass ?? 'false' %}
+{% set submitClass = submitClass ?? false %}
+{% set submitDisabled = submitDisabled ?? false %}
+{% set hideSubmit = hideSubmit ?? false %}
+{% set fullWidth = fullWidth ?? false %}
+{% set javascript = javascript ?? true %}
+{% set cancel = cancel ?? false %}
+{% set reset = reset ?? false %}
+{% set redirect = redirect ?? false %}
+
+{% set hidden = hidden ?? {} %}
+
+{% set toast = toast ?? false %}
+{% set errorBlock = (errorBlock ?? false) ? true : false %}
 {% set successBlock = successBlock ?? false %}
-{% set formHeader = formHeader ?? false %}
-{% set formFooter = formFooter ?? false %} #}
+{% set successToast = successToast ?? false %}
+{% set confirmMessage = confirmMessage ?? false %}
 
-<form{{ id ? (' id="'~id~'"')|raw }} method="{{ method }}" accept-charset="UTF-8">
+{% set formClasses = [
+	(formClass ? formClass : null),
+]|filter|join(' ') %}
 
-	{{ csrfInput() }}
+{% set attributes = [
+	'method="'~method~'"',
+	'accept-charset="UTF-8"',
+	'enctype="multipart/form-data"',
+	(javascript ? ' data-form' : null),
+    (actionUrl ? 'action="'~actionUrl|raw~'"' : null),
+    (errorBlock ? 'data-option-form-errors="true"' : null),
+    (toast ? 'data-option-toast="true"' : null),
+    (successBlock ? 'data-option-show-success-block="true"' : null),
+    (confirmMessage ? 'data-option-confirm="'~ confirmMessage ~'"' : null),
+    (successToast ? 'data-option-toast-success-message="'~ successToast ~'"' : null),
+    'data-option-offset="120"'
+]|merge(attributes ?? [])|filter|join(' ') %}
 
-	{% if action %}
-    	<input type="hidden" name="action" value="{{ action }}">
+<form id="{{ id }}" class="{{ formClasses }}" {{ attributes|raw }}>
+
+	{% if successBlock %}
+		<div class="form-success-block hidden" data-form-success-block>{{ successBlock }}</div>
 	{% endif %}
 
-	{% if fields %}
-		{{ fields }}
-	{% endif %}
+	<div class="w-full" data-form-wrapper>
 
-	<input class="btn bg-primary text-white" type="submit" value="Save changes">
+		{# Form errors block, shown on error #}
+		<div class="form-errors hidden" data-form-errors></div>
+
+		{{ csrf ? csrfInput() }}
+
+		{{ redirect ? redirectInput(redirect) }}
+
+		{% if action %}
+	    	<input type="hidden" name="action" value="{{ action }}">
+		{% endif %}
+
+		{% if hidden | length %}
+			{% for handle, value in hidden if value is not null %}
+				<input type="hidden" name="{{ handle }}" value="{{ value }}">
+			{% endfor %}
+		{% endif %}
+
+		{{ fields ?? '' }}
+
+		{% if not hideSubmit %}
+			{{ macros.submit({
+				submitText: submitText,
+				wrapperClass: wrapperClass,
+				submitClass: submitClass,
+				fullWidth: fullWidth,
+				submitDisabled: submitDisabled,
+				cancel: cancel,
+				reset: reset,
+			}) }}
+		{% endif %}
+
+	</div>
 
 </form>

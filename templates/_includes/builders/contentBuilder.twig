@@ -1,0 +1,13 @@
+{# Content Builder #}
+
+{% set blocks = blocks is defined ? blocks : [] %}
+	{% if blocks|length %}
+
+	{% for block in blocks.all() %}
+
+		{% set spacing = 'mb-8' %}
+		{% include '_includes/builders/blocks/' ~ block.type.handle %}
+
+	{% endfor %}
+
+{% endif %}

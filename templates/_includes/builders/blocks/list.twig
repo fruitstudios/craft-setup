@@ -1,0 +1,5 @@
+<{{ block.listType }} class="{{ spacing|default('mb-4') }}">
+	{% for item in block.list %}
+	  <li>{{ item.item }}</li>
+	{% endfor %}
+</{{ block.listType }}>

@@ -1,25 +1,26 @@
 {
-  "name": "fruit-core",
+  "name": "craft-setup",
   "version": "0.1.1",
-  "homepage": "https://github.com/fruitstudios/core",
+  "homepage": "https://github.com/fruitstudios/craft-setup",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fruitstudios/core.git"
+    "url": "https://github.com/fruitstudios/craft-setup.git"
   },
-  "description": "Core is a project boilerplate for Craft 3",
+  "description": "Template, JS and CSS setup for Craft 3",
   "author": "Sean Hill",
   "main": "gulpfile.js",
   "license": "MIT",
   "paths": {
     "src": {
-      "css": "./src/css/",
+      "css": "./src/css/**/*",
       "images": "./src/images/**/*",
-      "fonts": "./src/fonts/*",
+      "fonts": "./src/fonts/**/*",
       "svgs": "./src/icons/svg/**/*.svg",
       "js": [
-        "./src/js/vendor/**/*.js",
         "./src/js/app.js",
-        "./src/js/modules/**/*.js"
+        "./src/js/modules/**/*.js",
+        "./src/js/plugins/**/*.js",
+        "./src/js/vendor/*.js"
       ]
     },
     "tailwind": {
@@ -37,24 +38,25 @@
     "craftConfig": "./config/"
   },
   "urls": {
-    "live": "https://gwendolenhouse.com",
-    "local": "https://gwendolenhouse.dev"
+    "live": "",
+    "local": "https://domain.test"
   },
   "devDependencies": {
+    "autoprefixer": "^8.1.0",
     "browser-sync": "^2.17.5",
     "fancy-log": "^1.3.2",
     "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^3.1.1",
     "gulp-cached": "^1.1.1",
     "gulp-cheerio": "^0.6.2",
     "gulp-concat": "^2.6.1",
+    "gulp-cssimport": "^6.0.1",
     "gulp-cssnano": "^2.1.2",
     "gulp-html-beautify": "^1.0.1",
     "gulp-imagemin": "^3.1.1",
     "gulp-load-plugins": "^1.5.0",
     "gulp-plumber": "^1.1.0",
     "gulp-postcss": "^7.0.1",
-    "gulp-purgecss": "^0.20.0",
+    "gulp-purgecss": "^1.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.6.1",
     "gulp-sass": "^3.1.0",
@@ -62,6 +64,8 @@
     "gulp-svg-symbols": "1.0.0",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
-    "tailwindcss": "^0.4.1"
-  }
+    "postcss-custom-properties": "^7.0.0",
+    "tailwindcss": "^0.6.5"
+  },
+  "dependencies": {}
 }

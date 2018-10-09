@@ -1,57 +1,86 @@
-{# Select Options Available #}
+{# Select Input #}
 
-{# Setting options example...#}
+{% set id = id ?? ('select-'~random()) %}
+{% set name = name ?? '' %}
 
-{#
-	id: "myfieldId",
-	name: "myfieldName",
-	inputClass: "myfieldClass",
-	disabled: true/false,
-	placeholder: "Field Placeholder",
-	optgroups: optgroups,
-	options: options
- #}
-
-{% set classes = [
-	(inputClass ?? null),
-]|filter|join(' ') %}
-
-{% set options = options is defined ? options : [] %}
-{% set optgroups = optgroups ?? null %}
+{% set options = options ?? [] %}
 {% set value = value ?? null %}
+{% set values = values ?? [] %}
+
+{% set inputWidth = inputWidth ?? false %}
+{% set required = required ?? false %}
+{% set toggle = toggle ?? false %}
+{% set multiple = multiple ?? false %}
+{% set disabled = disabled ?? false %}
+{% set placeholder = placeholder ?? false %}
+{% set optgroups = optgroups ?? null %}
 {% set hasOptgroups = false %}
 
+{% set additionalAttributes = attributes ?? [] %}
+
+{% set classes = [
+	'input pr-12 appearance-none bg-white',
+	(inputClass ?? null),
+	(inputWidth ? inputWidth : 'w-full'),
+]|filter|join(' ') %}
+
+{% set attributes = [
+    (disabled ? 'disabled' : null),
+    (required ? 'required' : null),
+    (multiple ? 'multiple' : null),
+    (placeholder ? 'placeholder="'~placeholder~'"' : null),
+    (toggle ? 'data-toggle="'~toggle~'"' : null),
+]|merge(additionalAttributes)|filter|join(' ') %}
+
 <div class="field-input">
-	<select class="{{ classes }}"
-		{% if id is defined %} id="{{ id }}"{% endif %}
-		{% if name is defined %} name="{{ name }}"{% endif %}
-		{% if placeholder is defined %} placeholder="{{ placeholder }}"{% endif %}
-		{% if disabled is defined and disabled %} disabled{% endif %}>
+	<select id="{{ id }}" class="{{ classes }}" name="{{ name }}" {{ attributes|raw }}>
 		{% if optgroups %}
+
 			{% for key, optgroup in optgroups %}
 				{% if optgroup.options is defined %}
 				    <optgroup label="{{ optgroup.name }}">
 				    {% for key, option in optgroup.options %}
-						{% set optionLabel = (option.label is defined ? option.label : option) %}
-						{% set optionValue = (option.value is defined ? option.value : key) %}
-						{% set optionDisabled = (option.disabled is defined ? option.disabled : false) %}
-						<option value="{{ optionValue }}"{% if optionValue == value %} selected{% endif %}{% if optionDisabled %} disabled{% endif %}>{{ optionLabel }}</option>
+
+						{% set optionValue = option.value ?? key %}
+						{% set attributes = [
+						    ((option.toggle ?? null) is not null ? 'data-toggle-value="'~option.toggle~'"' : null),
+						    (option.disabled ?? false ? 'disabled' : null),
+						    (option.placeholder ?? false ? 'placeholder' : null),
+						    ((option.selected ?? false) or (optionValue == value) or (optionValue in values) ? 'selected' : null),
+						]|filter|join(' ') %}
+						<option value="{{ optionValue }}" {{ attributes|raw }}>{{ option.label ?? option }}</option>
+
 					{% endfor %}
 					</optgroup>
 				{% else %}
-					{% set optionLabel = (option.label is defined ? option.label : optgroup) %}
-					{% set optionValue = (option.value is defined ? option.value : key) %}
-					{% set optionDisabled = (option.disabled is defined ? option.disabled : false) %}
-					<option value="{{ optionValue }}"{% if optionValue == value %} selected{% endif %}{% if optionDisabled %} disabled{% endif %}>{{ optionLabel }}</option>
+
+					{% set optionValue = option.value ?? key %}
+					{% set attributes = [
+						((option.toggle ?? null) is not null ? 'data-toggle-value="'~option.toggle~'"' : null),
+					    (option.disabled ?? false ? 'disabled' : null),
+					    (option.placeholder ?? false ? 'placeholder' : null),
+					    ((option.selected ?? false) or (optionValue == value) or (optionValue in values) ? 'selected' : null),
+					]|filter|join(' ') %}
+					<option value="{{ optionValue }}" {{ attributes|raw }}>{{ option.label ?? optgroup }}</option>
+
 				{% endif %}
 			{% endfor %}
+
 		{% else %}
+
 		    {% for key, option in options %}
-				{% set optionLabel = (option.label is defined ? option.label : option) %}
-				{% set optionValue = (option.value is defined ? option.value : key) %}
-				{% set optionDisabled = (option.disabled is defined ? option.disabled : false) %}
-				<option value="{{ optionValue }}"{% if optionValue == value %} selected{% endif %}{% if optionDisabled %} disabled{% endif %}>{{ optionLabel }}</option>
+
+				{% set optionValue = option.value ?? key %}
+				{% set attributes = [
+					((option.toggle ?? null) is not null ? 'data-toggle-value="'~option.toggle~'"' : null),
+				    (option.disabled ?? false ? 'disabled' : null),
+				    (option.placeholder ?? false ? 'placeholder' : null),
+				    ((option.selected ?? false) or (optionValue == value) or (optionValue in values) ? 'selected' : null),
+				]|filter|join(' ') %}
+				<option value="{{ optionValue }}" {{ attributes|raw }}>{{ option.label ?? option }}</option>
+
 			{% endfor %}
+
 		{% endif %}
 	</select>
 </div>

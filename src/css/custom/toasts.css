@@ -1,0 +1,25 @@
+/* purgecss start ignore */
+.toast {
+	@apply .fixed .inline-flex .items-center .pin-t .shadow .z-50 .py-2 .px-4 .rounded-b .flex-row .flex-row-reverse;
+	left: 50%;
+	transform: translateX(-50%);
+}
+.toast.toast-info {
+	@apply .bg-blue .text-white;
+}
+.toast.toast-error {
+	@apply .bg-red .text-white;
+}
+.toast.toast-success {
+	@apply .bg-green .text-white;
+}
+.toast-dismiss {
+	@apply .flex .items-center .ml-4 .opacity-50;
+}
+.toast-dismiss:hover {
+	@apply .cursor-pointer .opacity-100;
+}
+.toast svg {
+	@apply .text-white .fill-current .h-4 .w-4
+}
+/* purgecss end ignore */

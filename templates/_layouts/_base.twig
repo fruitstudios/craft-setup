@@ -1,18 +1,21 @@
 {% set baseUrl = alias('@baseUrl') ~ '/' %}
 {% set devMode = craft.app.config.general.devMode %}
-{% set analytics = 'GA_TRACKING_ID' %}
 {% set lang = craft.app.language |slice(0,2) %}
 {% set staticAssetsVersion = craft.app.config.general.custom.staticAssetsVersion %}
 
 {% set title = title ?? globalSeo.globalSeoTitle ?? false %}
-{% set description = description ?? globalSeo.globalSeoDescription ?? false %}
-{% set seoImage = seoImage ?? globalSeo.globalSeoImage.one().getUrl('size460x320') ?? false %}
-{% set seoTwitterHandle = globalContactInformation.globalTwitterUsername ?? false %}
+{% set description = description ?? globalSeo.defaultSeoDescription ?? false %}
+{% set seoImage = seoImage ?? globalSeo.defaultSeoImage.one().getUrl() ?? false %}
+{% set seoTwitterHandle = globalContactInformation.defaultTwitterUsername ?? false %}
+
+{% set enableFacebookPixel = enableFacebookPixel ?? globalsSettings.enableFacebookPixel ?? false %}
+{% set enableDrift = enableDrift ?? globalsSettings.enableDrift ?? false %}
+{% set enableFullstory = enableFullstory ?? globalsSettings.enableFullstory ?? false %}
 
 {% import "_macros" as macros %}
 
 <!DOCTYPE html>
-<html class="h-full" lang="{{ lang }}">
+<html lang="{{ lang }}">
     <head>
         {# -- Meta header tags -- #}
         <meta charset="utf-8">
@@ -21,64 +24,76 @@
 
         {# -- Basic Meta -- #}
         <title>{{ title ? title ~ ' - ' }}{{ siteName }}</title>
-        <meta name="description" content="{{ description }}">
+        <meta name="description" content="{{ description|striptags|raw }}">
 
         {# -- Favicons -- #}
         {% include '_includes/blocks/favicons' %}
 
         {# -- Open Graph Meta -- #}
-        <meta property="og:locale" content="{{ lang }}" />
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content="{{ title }}" />
-        <meta property="og:description" content="{{ description }}" />
-        <meta property="og:url" content="{{ craft.app.request.url }}" />
-        <meta property="og:site_name" content="{{ siteName }}" />
-        <meta property="og:image" content="{{ seoImage }}" />
+        <meta property="og:locale" content="{{ lang }}">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="{{ title }}">
+        <meta property="og:description" content="{{ description|striptags|raw }}">
+        <meta property="og:url" content="{{ craft.app.request.url }}">
+        <meta property="og:site_name" content="{{ siteName }}">
+        <meta property="og:image" content="{{ seoImage }}">
 
         {# -- Twitter Cards Meta -- #}
-        <meta name="twitter:card" content="summary_large_image"/>
-        <meta name="twitter:title" content="{{ title }}"/>
-        <meta name="twitter:description" content="{{ description }}"/>
-        <meta name="twitter:image" content="{{ seoImage }}"/>
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ title }}">
+        <meta name="twitter:description" content="{{ description|striptags|raw }}">
+        <meta name="twitter:image" content="{{ seoImage }}">
         {% if seoTwitterHandle %}
-            <meta name="twitter:site" content="{{ seoTwitterHandle }}"/>
-            <meta name="twitter:creator" content="{{ seoTwitterHandle }}"/>
+            <meta name="twitter:site" content="{{ seoTwitterHandle }}">
+            <meta name="twitter:creator" content="{{ seoTwitterHandle }}">
         {% endif %}
 
         {# -- Links -- #}
         <link rel="dns-prefetch" href="{{ baseUrl }}">
-        <link rel="preconnect" href="{{ baseUrl }}" crossorigin>
+        <link rel="preconnect" href="{{ baseUrl }}" crossorigin="">
+
         <link rel="stylesheet" href="{{ baseUrl }}build/css/app{{ devMode ? '' : '.min.' ~ staticAssetsVersion }}.css">
+
+        {# -- Polyfill -- #}
+        <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 
         {# -- Analytics -- #}
         {% if not devMode %}
             <!-- Global Site Tag (gtag.js) - Google Analytics -->
-            <script async src="https://www.googletagmanager.com/gtag/js?id={{ analytics | raw }}"></script>
+            <script async src="https://www.googletagmanager.com/gtag/js?id={{ globalsSettings.gaTrackingId | raw }}"></script>
             <script>
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-
-              gtag('config', '{{ analytics | raw }}');
+              gtag('config', '{{ globalsSettings.gaTrackingId | raw }}');
             </script>
+        {% endif %}
+
+        {# -- Header Meta -- #}
+        {{ globalsSettings.headerMeta|raw }}
+
+        {% if enableFacebookPixel %}
+            {% include '_includes/js/facebookPixel' %}
+        {% endif %}
+
+        {% if enableDrift %}
+            {% include '_includes/js/drift' %}
+        {% endif %}
+
+        {% if enableFullstory %}
+            {% include '_includes/js/fullstory' %}
         {% endif %}
 
     </head>
 
-    {# -- HTML Body with a sticky footer -- #}
-    <body class="flex flex-col h-full">
+    <body>
 
-        {# -- Include the header -- #}
         {% include '_includes/blocks/header' %}
-
-        {# -- Main body content -- #}
-        <div class="flex-1">
-          {% block body %}{% endblock %}
-        </div>
-
-        {# -- Footer -- #}
+        {% block body %}{% endblock %}
         {% include '_includes/blocks/footer' %}
 
-        <script type="text/javascript" src="{{ baseUrl }}build/js/app{{ devMode ? '' : '.min.' ~ staticAssetsVersion }}.js"></script>
+        {% include '_includes/js/app' %}
+        {{ endBody() }}
+
     </body>
 </html>

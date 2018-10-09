@@ -1,8 +1,15 @@
 {% extends "_layouts/auth.twig" %}
+{% import "_macros" as macros %}
 
 {# Set Meta #}
 {% set title = '(500) Internal Server Error' %}
 {% set description = 'An error occurred while processing your request' %}
 
 {% block content %}
+
+	<div class="mb-8 pt-8 mx-auto text-center">
+		<h1>{{ title }}</h1>
+		<p>{{ description }}</p>
+	</div>
+
 {% endblock %}
