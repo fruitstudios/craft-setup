@@ -4,6 +4,7 @@
 {% set transform = transform ?? false %}
 {% set cropPosition = cropPosition ?? 'center' %}
 {% set quality = quality ?? 80 %}
+{% set dummy = dummy ?? false %}
 
 {% if aspectRatio %}
 	{% switch aspectRatio %}
@@ -24,6 +25,10 @@
 			    quality: quality,
 			    position: cropPosition
 			} %}
+			{% if dummy %}
+				{% set image = 'https://picsum.photos/640/360/?random' %}
+				{% set retinaImage = 'https://picsum.photos/1200/675/?random' %}
+			{% endif %}
 
 		{% case "4x3" %}
 			{% set classes = 'ar ar-4x3' %}
@@ -41,6 +46,10 @@
 			    quality: quality,
 			    position: cropPosition
 			} %}
+			{% if dummy %}
+				{% set image = 'https://picsum.photos/640/480/?random' %}
+				{% set retinaImage = 'https://picsum.photos/1200/900/?random' %}
+			{% endif %}
 
 		{% case "3x2" %}
 			{% set classes = 'ar ar-3x2' %}
@@ -58,6 +67,10 @@
 			    quality: quality,
 			    position: cropPosition
 			} %}
+			{% if dummy %}
+				{% set image = 'https://picsum.photos/600/400/?random' %}
+				{% set retinaImage = 'https://picsum.photos/1200/800/?random' %}
+			{% endif %}
 
 		{% case "2x1" %}
 			{% set classes = 'ar ar-1x1' %}
@@ -75,6 +88,10 @@
 			    quality: quality,
 			    position: cropPosition
 			} %}
+			{% if dummy %}
+				{% set image = 'https://picsum.photos/640/320/?random' %}
+				{% set retinaImage = 'https://picsum.photos/1200/600/?random' %}
+			{% endif %}
 
 		{% case "1x1" %}
 			{% set classes = 'ar ar-1x1' %}
@@ -92,6 +109,10 @@
 			    quality: quality,
 			    position: cropPosition
 			} %}
+			{% if dummy %}
+				{% set image = 'https://picsum.photos/640/640/?random' %}
+				{% set retinaImage = 'https://picsum.photos/1200/1200/?random' %}
+			{% endif %}
 
 	{% endswitch %}
 
@@ -105,11 +126,11 @@
 		<img class="block lazyload"
 			 data-sizes="auto"
 			 src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-			 data-src="{{ image.getUrl(transform) }}"
-			 data-srcset="{{ image.getUrl(transform) }} 640w,
-			 			  {{ image.getUrl(transformRetina) }} 1200w">
+			 data-src="{{ dummy ? image : image.getUrl(transform) }}"
+			 data-srcset="{{ dummy ? image : image.getUrl(transform) }} 640w,
+			 			  {{ dummy ? retinaImage : image.getUrl(transformRetina) }} 1200w">
 		<noscript>
-			<img class="image-fallback block" src="{{ image.getUrl(transform) }}">
+			<img class="image-fallback block" src="{{ dummy ? image : image.getUrl(transform) }}">
 		</noscript>
 	</div>
 
