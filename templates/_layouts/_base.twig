@@ -4,9 +4,9 @@
 {% set staticAssetsVersion = craft.app.config.general.custom.staticAssetsVersion %}
 
 {% set title = title ?? globalSeo.globalSeoTitle ?? false %}
-{% set description = description ?? globalSeo.defaultSeoDescription ?? false %}
-{% set seoImage = seoImage ?? globalSeo.defaultSeoImage.one().getUrl() ?? false %}
-{% set seoTwitterHandle = globalContactInformation.defaultTwitterUsername ?? false %}
+{% set description = description ?? globalSeo.globalSeoDescription ?? false %}
+{% set seoImage = seoImage ?? globalSeo.globalSeoImage.one().getUrl() ?? false %}
+{% set seoTwitterHandle = globalContactInformation.globalTwitterUsername ?? false %}
 
 {% set enableFacebookPixel = enableFacebookPixel ?? globalsSettings.enableFacebookPixel ?? false %}
 {% set enableDrift = enableDrift ?? globalsSettings.enableDrift ?? false %}
@@ -70,7 +70,7 @@
         {% endif %}
 
         {# -- Header Meta -- #}
-        {{ globalsSettings.headerMeta|raw }}
+        {{ globalSettings.globalHeaderMeta|raw }}
 
         {% if enableFacebookPixel %}
             {% include '_includes/js/facebookPixel' %}

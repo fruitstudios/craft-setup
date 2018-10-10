@@ -30,11 +30,14 @@ Basic project structure for a Craft 3 set up. Includes some base macros, scss/js
 * Copy `package.json gulpfile.js and .gitignore` to project root
 * Run `$ npm install`
 * Add test domain via Valet `valet link domain` and secure `valet secure domain`
+* Set domains in `config/patrol.php`
 * Add the local domain to the gulpfile.js
+* Run `./node_modules/.bin/tailwind init`
 * Install [Patrol](https://github.com/selvinortiz/craft-plugin-patrol) `composer require selvinortiz/patrol`
 * Install [Linkit](https://github.com/fruitstudios/craft-linkit) `composer require fruitstudios/linkit`
 * Install [Field Manager Plugin](https://github.com/verbb/field-manager) `composer require verbb/field-manager`
 * Import fields from `fields_to_import.json` file
+* Set up global sets globalSettings, globalSeo
 
 
 ### Acknowledgments
