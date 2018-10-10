@@ -3,6 +3,9 @@
  #}
 
 {# Elements #}
+{% macro image(config) %}
+	{% include "_macros/elements/image" with (config ?? {}) only %}
+{% endmacro %}
 
 {# Components #}
 

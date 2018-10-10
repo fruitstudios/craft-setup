@@ -25,6 +25,7 @@ html {
 @import 'custom/forms.css';
 @import 'custom/headings.css';
 @import 'custom/ie.css';
+@import 'custom/images.css';
 @import 'custom/rte.css';
 @import 'custom/spinner.css';
 @import 'custom/toasts.css';

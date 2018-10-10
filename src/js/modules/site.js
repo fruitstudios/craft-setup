@@ -15,6 +15,15 @@ app.site.init = (function () {
 
     _api.init = function () {
 
+        var lazy = function lazy() {
+          document.addEventListener('lazyloaded', function (e)  {
+            e.target.parentNode.classList.add('image-loaded');
+            e.target.parentNode.classList.remove('loading');
+          });
+        }
+
+        lazy();
+
         // SVG
         svg4everybody();
 
@@ -22,18 +31,6 @@ app.site.init = (function () {
         mediumZoom('[data-action="zoom"]', {
             margin: 24,
             background: 'rgba(29, 36, 46, 0.9)',
-        });
-
-        // Accordian
-        houdini.init({
-            selectorToggle: '[data-collapse]',
-            selectorContent: '.collapse',
-            toggleActiveClass: 'active',
-            contentActiveClass: 'active',
-            initClass: 'js-houdini',
-            stopVideo: true,
-            callbackOpen: function ( content, toggle ) {},
-            callbackClose: function ( content, toggle ) {}
         });
 
         // Smooth scrolling

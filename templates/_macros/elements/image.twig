@@ -1,0 +1,122 @@
+{% set image = image ?? false %}
+{% set aspectRatio = aspectRatio ?? false %}
+{% set background = background ?? 'bg-grey-lightest' %}
+{% set transform = transform ?? false %}
+{% set cropPosition = cropPosition ?? 'center' %}
+{% set quality = quality ?? 80 %}
+
+{% if aspectRatio %}
+	{% switch aspectRatio %}
+
+		{% case "16x9" %}
+			{% set classes = 'ar ar-16x9' %}
+			{% set transform = {
+			    mode: 'crop',
+			    width: 640,
+			    height: 360,
+			    quality: quality,
+			    position: cropPosition
+			} %}
+			{% set transformRetina = {
+			    mode: 'crop',
+			    width: 1200,
+			    height: 675,
+			    quality: quality,
+			    position: cropPosition
+			} %}
+
+		{% case "4x3" %}
+			{% set classes = 'ar ar-4x3' %}
+			{% set transform = {
+			    mode: 'crop',
+			    width: 640,
+			    height: 480,
+			    quality: quality,
+			    position: cropPosition
+			} %}
+			{% set transformRetina = {
+			    mode: 'crop',
+			    width: 1200,
+			    height: 900,
+			    quality: quality,
+			    position: cropPosition
+			} %}
+
+		{% case "3x2" %}
+			{% set classes = 'ar ar-3x2' %}
+			{% set transform = {
+			    mode: 'crop',
+			    width: 600,
+			    height: 400,
+			    quality: quality,
+			    position: cropPosition
+			} %}
+			{% set transformRetina = {
+			    mode: 'crop',
+			    width: 1200,
+			    height: 800,
+			    quality: quality,
+			    position: cropPosition
+			} %}
+
+		{% case "2x1" %}
+			{% set classes = 'ar ar-1x1' %}
+			{% set transform = {
+			    mode: 'crop',
+			    width: 640,
+			    height: 320,
+			    quality: quality,
+			    position: cropPosition
+			} %}
+			{% set transformRetina = {
+			    mode: 'crop',
+			    width: 1200,
+			    height: 600,
+			    quality: quality,
+			    position: cropPosition
+			} %}
+
+		{% case "1x1" %}
+			{% set classes = 'ar ar-1x1' %}
+			{% set transform = {
+			    mode: 'crop',
+			    width: 640,
+			    height: 640,
+			    quality: quality,
+			    position: cropPosition
+			} %}
+			{% set transformRetina = {
+			    mode: 'crop',
+			    width: 1200,
+			    height: 1200,
+			    quality: quality,
+			    position: cropPosition
+			} %}
+
+	{% endswitch %}
+
+	{% set classes = [
+		'image loading',
+	    classes,
+	    background,
+	]|filter|join(' ') %}
+
+	<div class="{{ classes }}">
+		<img class="block lazyload"
+			 data-sizes="auto"
+			 src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+			 data-src="{{ image.getUrl(transform) }}"
+			 data-srcset="{{ image.getUrl(transform) }} 640w,
+			 			  {{ image.getUrl(transformRetina) }} 1200w">
+		<noscript>
+			<img class="image-fallback block" src="{{ image.getUrl(transform) }}">
+		</noscript>
+	</div>
+
+{% endif %}
+
+
+
+
+
+
