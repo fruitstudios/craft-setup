@@ -36,9 +36,18 @@ Basic project structure for a Craft 3 set up. Includes some base macros, scss/js
 * Install [Patrol](https://github.com/selvinortiz/craft-plugin-patrol) `composer require selvinortiz/patrol`
 * Install [Linkit](https://github.com/fruitstudios/craft-linkit) `composer require fruitstudios/linkit`
 * Install [Field Manager Plugin](https://github.com/verbb/field-manager) `composer require verbb/field-manager`
+* Install [AWS S3 Plugin](https://github.com/craftcms/aws-s3) `composer require craftcms/aws-s3`
+* Install [Redactor Plugin](https://github.com/craftcms/redactor) `composer require craftcms/redactor`
+* Install [Postmark Plugin](https://github.com/flipboxfactory/craft-postmark) `composer require flipboxfactory/craft-postmark`
+* Install [Preparse Plugin](https://github.com/aelvan/Preparse-Field-Craft) `composer require aelvan/preparse-field`
+* Install [Position Plugin](https://github.com/Rias500/craft-position-fieldtype) `composer require rias/craft-position-fieldtype`
+* Install [Typogrify Plugin](https://github.com/nystudio107/craft-typogrify) `composer require nystudio107/craft-typogrify`
+* Install [Relabel Plugin](https://github.com/Anubarak/craft-relabel) `composer require anubarak/craft-relabel`
+
+  * `composer require selvinortiz/patrol && composer require fruitstudios/linkit && composer require verbb/field-manager && composer require craftcms/aws-s3 && composer require craftcms/redactor && composer require flipboxfactory/craft-postmark && composer require aelvan/preparse-field && composer require rias/craft-position-fieldtype && composer require nystudio107/craft-typogrify && composer require anubarak/craft-relabel`
+
 * Import fields from `fields_to_import.json` file
 * Set up global sets globalSettings, globalSeo
-
 
 ### Acknowledgments
 
