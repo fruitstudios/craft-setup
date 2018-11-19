@@ -43,8 +43,11 @@ Basic project structure for a Craft 3 set up. Includes some base macros, scss/js
 * Install [Position Plugin](https://github.com/Rias500/craft-position-fieldtype) `composer require rias/craft-position-fieldtype`
 * Install [Typogrify Plugin](https://github.com/nystudio107/craft-typogrify) `composer require nystudio107/craft-typogrify`
 * Install [Relabel Plugin](https://github.com/Anubarak/craft-relabel) `composer require anubarak/craft-relabel`
+* Install [Craft Queue Manager Plugin](https://github.com/lukeyouell/craft-queue-manager) `composer require lukeyouell/craft-queue-manager`
+* Install [Async (Background) Queue Plugin](https://github.com/ostark/craft-async-queue) `composer require ostark/craft-async-queue`
 
-  * `composer require selvinortiz/patrol && composer require fruitstudios/linkit && composer require verbb/field-manager && composer require craftcms/aws-s3 && composer require craftcms/redactor && composer require flipboxfactory/craft-postmark && composer require aelvan/preparse-field && composer require rias/craft-position-fieldtype && composer require nystudio107/craft-typogrify && composer require anubarak/craft-relabel`
+
+  * `composer require selvinortiz/patrol && composer require fruitstudios/linkit && composer require verbb/field-manager && composer require craftcms/aws-s3 && composer require craftcms/redactor && composer require flipboxfactory/craft-postmark && composer require aelvan/preparse-field && composer require rias/craft-position-fieldtype && composer require nystudio107/craft-typogrify && composer require anubarak/craft-relabel && composer require lukeyouell/craft-queue-manager && composer require ostark/craft-async-queue`
 
 * Import fields from `fields_to_import.json` file
 * Set up global sets globalSettings, globalSeo
